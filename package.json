@@ -1,0 +1,29 @@
+{
+  "name": "ui-otl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grumbash/UI-OTL.git"
+  },
+  "author": "Rosev Gleb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Grumbash/UI-OTL/issues"
+  },
+  "homepage": "https://github.com/Grumbash/UI-OTL#readme",
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-pug": "^3.0.0-2",
+    "mongoose": "^5.4.12"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
