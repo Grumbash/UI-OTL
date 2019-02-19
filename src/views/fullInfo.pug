@@ -1,9 +1,26 @@
-<!DOCTYPE html>
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(http-equiv="X-UA-Compatible", content="ie=edge")
-    title Period
-  body
-    h1 Неделя:  #{period.from} - #{period.to} 
+include includes/template.pug
+body
+  h1 Неделя:  #{period.from} - #{period.to} 
+  table.striped.centered
+    thead
+      tr 
+        th PO
+        th Project
+        th Sat
+        th Sun
+        th Mon
+        th Tue
+        th Wen
+        th Thu
+        th Fri
+        th Total
+        th Updated at
+    tbody
+      each project in period.projects
+        tr
+          td= project.PO
+          td= project.name
+          each day in project.days
+            td= day
+          td= project.total
+          td #{moment(project.updatedAt).format("LLL")}

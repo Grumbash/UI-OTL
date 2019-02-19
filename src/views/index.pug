@@ -1,28 +1,27 @@
-<!DOCTYPE html>
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(http-equiv="X-UA-Compatible", content="ie=edge")
-    title OTL Tables
-  body
-    each user in users
-      table
-        caption=user.name
+include includes/template.pug
+body
+  each user in users
+    table.striped.centered
+      caption
+        h5=user.name
+      thead
         tr
-          th От
-          th До
-          th Статус
-          th Проекты
+          th Period
+          th Status
+          th Projects
+      tbody
         each period in user.periods
           tr
-          
-            td=period.from
-            td=period.to
-            td=period.status
+            td #{period.from} - #{period.to}
+            td
+              case period.status
+                when "Approved"
+                  span.green-text.text-accent-4 #{period.status}
+                default
+                  span.red-text.text-darken-4 #{period.status}
             td
               a(href=period.id)
-                | Показать
+                | Show
 
 
 

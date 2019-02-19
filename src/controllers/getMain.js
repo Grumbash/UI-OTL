@@ -1,7 +1,11 @@
 const UserModel = require("../models/User");
-const moment = require("moment");
 module.exports = async ctx => {
-  const users = await UserModel.find({})
-  console.log(users[1].periods)
-  ctx.render("index", { users });
+  try {
+    const users = await UserModel.find({}).populate({
+      path: "periods"
+    })
+    ctx.render("index", { users });
+  } catch (error) {
+    console.error(error);
+  }
 }

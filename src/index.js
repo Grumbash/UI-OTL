@@ -11,6 +11,9 @@ mongoose
 const app = new Koa();
 new Pug({
   viewPath: './src/views',
+  helperPath: [
+    { moment: require("moment") }
+  ],
   app
 });
 
