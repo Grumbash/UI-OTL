@@ -5,11 +5,14 @@ const moment = require('moment');
 
 module.exports = async ctx => {
   try {
-
     const { id } = ctx.params;
-    const period = await PeriodModel.findById(id).populate('projects');
+    const user = await UserModel.findById(id).populate({
+      path: "periods", populate: {
+        path: "projects"
+      }
+    });;
 
-    await ctx.render('blocks/fullInfo', { period, moment });
+    await ctx.render('blocks/user', { user, moment });
 
   } catch (error) {
     console.log(error);

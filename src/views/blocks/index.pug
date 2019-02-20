@@ -1,9 +1,11 @@
-include includes/template.pug
-body
+extends ../template.pug
+block body
   each user in users
     table.striped.centered
       caption
-        h5=user.name
+        h5
+        - const url = "users/" + user.id;
+          a(href=url)=user.name
       thead
         tr
           th Period
@@ -20,9 +22,6 @@ body
                 default
                   span.red-text.text-darken-4 #{period.status}
             td
-              a(href=period.id)
+              - const url = "periods/" + period.id
+              a(href=url)
                 | Show
-
-
-
-      

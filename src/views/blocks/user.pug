@@ -1,0 +1,29 @@
+extends ../template.pug
+block body 
+  h4=user.name
+  each period in user.periods
+    table.striped.centered
+      caption 
+        h5 Period:  #{period.from} - #{period.to} 
+      thead
+        tr 
+          th PO
+          th Project
+          th Sat
+          th Sun
+          th Mon
+          th Tue
+          th Wen
+          th Thu
+          th Fri
+          th Total
+          th Updated at
+      tbody
+        each project in period.projects
+          tr
+            td= project.PO
+            td= project.name
+            each day in project.days
+              td= day
+            td= project.total
+            td #{moment(project.updatedAt).format("LLL")}

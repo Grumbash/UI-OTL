@@ -1,21 +1,25 @@
 const Koa = require('koa');
 const mongoose = require('mongoose');
-const Pug = require('koa-pug');
-const routes = require("./routes")
+const routes = require("./routes");
+const views = require('koa-views');
+const serve = require('koa-static');
+const logger = require('koa-logger');
+const bodyParser = require('koa-bodyparser');
 
+mongoose.set("debug", true);
 mongoose
   .connect('mongodb://localhost/otl', { useNewUrlParser: true })
   .then(() => console.log("MongoDB connected"))
   .catch(e => console.log(e));
 
 const app = new Koa();
-new Pug({
-  viewPath: './src/views',
-  helperPath: [
-    { moment: require("moment") }
-  ],
-  app
-});
+
+app.use(logger());
+app.use(bodyParser());
+app.use(serve(__dirname + '/public'));
+app.use(views(__dirname + '/views', {
+  extension: 'pug',
+}));
 
 app.use(async (ctx, next) => {
   try {
