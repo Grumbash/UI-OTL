@@ -1,25 +1,23 @@
+require('dotenv').config();
+
 const Koa = require('koa');
 const mongoose = require('mongoose');
-const routes = require("./routes");
-const views = require('koa-views');
-const serve = require('koa-static');
 const logger = require('koa-logger');
+const routes = require('./routes');
 const bodyParser = require('koa-bodyparser');
+const cors = require('koa2-cors');
 
-mongoose.set("debug", true);
+mongoose.set('debug', true);
 mongoose
-  .connect('mongodb://localhost/otl', { useNewUrlParser: true })
-  .then(() => console.log("MongoDB connected"))
+  .connect(process.env.DB_URL, { useNewUrlParser: true })
+  .then(() => console.log('MongoDB connected'))
   .catch(e => console.log(e));
 
 const app = new Koa();
 
 app.use(logger());
+app.use(cors());
 app.use(bodyParser());
-app.use(serve(__dirname + '/public'));
-app.use(views(__dirname + '/views', {
-  extension: 'pug',
-}));
 
 app.use(async (ctx, next) => {
   try {
@@ -35,6 +33,4 @@ app.use(async (ctx, next) => {
 
 app.use(routes.routes);
 app.use(routes.allowedMethods);
-
-
 app.listen(3000);

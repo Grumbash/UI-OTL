@@ -1,36 +1,19 @@
 {
-  "name": "ui-otl",
+  "name": "otl-ui",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "debug": "nodemon --inspect src/index.js"
+    "client": "cd view && npm run serve",
+    "install-client": "cd view && npm i",
+    "install-server": "cd api && npm i",
+    "install-all": "concurrently \"npm run install-server\" \"npm run install-client\"",
+    "server": "cd api && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Grumbash/UI-OTL.git"
-  },
-  "author": "Rosev Gleb",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Grumbash/UI-OTL/issues"
-  },
-  "homepage": "https://github.com/Grumbash/UI-OTL#readme",
   "dependencies": {
-    "koa": "^2.7.0",
-    "koa-bodyparser": "^4.2.1",
-    "koa-logger": "^3.2.0",
-    "koa-router": "^7.4.0",
-    "koa-static": "^5.0.0",
-    "koa-views": "^6.1.5",
-    "moment": "^2.24.0",
-    "mongoose": "^5.4.12",
-    "pug": "^2.0.3"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.10",
-    "prettier": "^1.16.4"
+    "concurrently": "^4.1.0"
   }
 }

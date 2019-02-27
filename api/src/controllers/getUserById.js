@@ -7,14 +7,14 @@ module.exports = async ctx => {
   try {
     const { id } = ctx.params;
     const user = await UserModel.findById(id).populate({
-      path: "periods", populate: {
-        path: "projects"
+      path: 'periods',
+      populate: {
+        path: 'projects'
       }
-    });;
+    });
 
-    await ctx.render('blocks/user', { user, moment });
-
+    ctx.body = user;
   } catch (error) {
     console.log(error);
   }
-}
+};
