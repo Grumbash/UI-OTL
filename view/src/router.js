@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Users from "./views/Users.vue";
 import Projects from "./views/Projects.vue";
 import Periods from "./views/Periods.vue";
+import Period from "./views/Period.vue";
 
 Vue.use(Router);
 
@@ -23,6 +24,11 @@ export default new Router({
       path: "/periods",
       name: "periods",
       component: Periods
+    },
+    {
+      path: "/periods/:id",
+      name: "period",
+      component: Period
     }
   ]
 });

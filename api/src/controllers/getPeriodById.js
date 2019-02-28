@@ -1,7 +1,6 @@
 const PeriodModel = require('../models/Period');
 const ProjectModel = require('../models/Project');
 const UserModel = require('../models/User');
-const moment = require('moment');
 
 module.exports = async ctx => {
   try {

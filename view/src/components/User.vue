@@ -16,9 +16,11 @@
       </template>
       <template slot="items" slot-scope="props">
         <tr>
-          <td>{{props.item.from}} - {{props.item.to}}</td>
-          <td>{{props.item.status}}</td>
-          <td router :to="props.item.id">Show all</td>
+          <td class="text-lg-center">{{props.item.from}} - {{props.item.to}}</td>
+          <td class="text-lg-center">{{props.item.status}}</td>
+          <td class="text-lg-center">
+            <v-btn route :to="`projects/${props.item._id}`">Show</v-btn>
+          </td>
         </tr>
       </template>
     </v-data-table>
