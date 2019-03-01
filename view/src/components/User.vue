@@ -5,7 +5,6 @@
       v-if="user"
       :items="user.periods"
       :headers="headers"
-      selec-all
       class="elevation-1"
       header-text="user.name"
     >
@@ -17,9 +16,13 @@
       <template slot="items" slot-scope="props">
         <tr>
           <td class="text-lg-center">{{props.item.from}} - {{props.item.to}}</td>
-          <td class="text-lg-center">{{props.item.status}}</td>
+          <td
+            class="text-lg-center"
+            :class="[props.item.status === 'Approved' ? 'green--text' : 'red--text']"
+          >{{props.item.status}}</td>
+
           <td class="text-lg-center">
-            <v-btn route :to="`projects/${props.item._id}`">Show</v-btn>
+            <v-btn route :to="`periods/${props.item._id}`">Show</v-btn>
           </td>
         </tr>
       </template>

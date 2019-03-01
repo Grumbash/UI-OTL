@@ -7,7 +7,6 @@ const routes = require('./routes');
 const bodyParser = require('koa-bodyparser');
 const cors = require('koa2-cors');
 
-mongoose.set('debug', true);
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected'))

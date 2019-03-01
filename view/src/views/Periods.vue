@@ -6,5 +6,18 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  data() {
+    return {
+      periods: Array
+    };
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/periods")
+      .then(periods => console.log(periods.data))
+      .catch(err => console.err(err));
+  }
+};
 </script>
