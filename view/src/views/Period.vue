@@ -9,20 +9,24 @@
     >
       <template slot="headers" slot-scope="props">
         <tr>
-          <th v-for="header in props.headers" :key="header.text">{{ header.text }}</th>
+          <th v-for="header in props.headers" :key="header.text">
+            {{ header.text }}
+          </th>
         </tr>
       </template>
       <template slot="items" slot-scope="props">
         <tr>
-          <td class="text-lg-center">{{props.item.PO}}</td>
-          <td class="text-lg-center">{{props.item.name}}</td>
+          <td class="text-lg-center">{{ props.item.PO }}</td>
+          <td class="text-lg-center">{{ props.item.name }}</td>
           <td
             v-for="day in props.item.days"
-            :key="day+Math.random()*Math.random()"
+            :key="day + Math.random() * Math.random()"
             class="text-lg-center"
-          >{{day}}</td>
-          <td class="text-lg-center">{{props.item.total}}</td>
-          <td class="text-lg-center">{{props.item.updatedAt}}</td>
+          >
+            {{ day }}
+          </td>
+          <td class="text-lg-center">{{ props.item.total }}</td>
+          <td class="text-lg-center">{{ props.item.updatedAt }}</td>
           <td class="text-lg-center">
             <v-btn route :to="`/projects/${props.item.PO}`">Show</v-btn>
           </td>

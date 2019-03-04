@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="display-1 grey--text">{{user.name}}</div>
+    <div class="display-1 grey--text">{{ user.name }}</div>
     <v-data-table
       v-if="user"
       :items="user.periods"
@@ -10,16 +10,24 @@
     >
       <template slot="headers" slot-scope="props">
         <tr>
-          <th v-for="header in props.headers" :key="header.text">{{ header.text }}</th>
+          <th v-for="header in props.headers" :key="header.text">
+            {{ header.text }}
+          </th>
         </tr>
       </template>
       <template slot="items" slot-scope="props">
         <tr>
-          <td class="text-lg-center">{{props.item.from}} - {{props.item.to}}</td>
+          <td class="text-lg-center">
+            {{ props.item.from }} - {{ props.item.to }}
+          </td>
           <td
             class="text-lg-center"
-            :class="[props.item.status === 'Approved' ? 'green--text' : 'red--text']"
-          >{{props.item.status}}</td>
+            :class="[
+              props.item.status === 'Approved' ? 'green--text' : 'red--text'
+            ]"
+          >
+            {{ props.item.status }}
+          </td>
 
           <td class="text-lg-center">
             <v-btn route :to="`periods/${props.item._id}`">Show</v-btn>
@@ -43,5 +51,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
