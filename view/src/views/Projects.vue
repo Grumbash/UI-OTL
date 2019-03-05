@@ -2,17 +2,10 @@
   <div class="projects">
     <h1 class="subheading grey--text">Projects</h1>
     <v-container class="my-5">
-      <v-data-table
-        v-if="projects.length"
-        :items="projects"
-        :headers="headers"
-        class="elevation-1"
-      >
+      <v-data-table v-if="projects.length" :items="projects" :headers="headers" class="elevation-1">
         <template slot="headers" slot-scope="props">
           <tr>
-            <th v-for="header in props.headers" :key="header.text">
-              {{ header.text }}
-            </th>
+            <th v-for="header in props.headers" :key="header.text">{{ header.text }}</th>
           </tr>
         </template>
         <template slot="items" slot-scope="props">
@@ -21,7 +14,7 @@
             <td class="text-lg-center">{{ props.item.name }}</td>
 
             <td class="text-lg-center">
-              <v-btn route :to="`periods/${props.item._id}`">Show</v-btn>
+              <v-btn route :to="`projects/${props.item.PO}`">Show</v-btn>
             </td>
           </tr>
         </template>

@@ -5,8 +5,23 @@ const UserModel = require('../models/User');
 module.exports = async ctx => {
   try {
     const { PO } = ctx.params;
-    const project = await ProjectModel.find({ PO }).populate({ path: 'period', populate: { path: "user" } });
-    ctx.body = project;
+    const users = await ProjectModel
+      .find({ PO })
+      .populate(
+        {
+          path: 'period',
+          populate: {
+            path: "user"
+          }
+        }
+      )
+      .then(projects => projects.filter((project, index, self) => (
+        index === self.findIndex(elem => (
+          elem.period.user.name === project.period.user.name
+        ))
+      )
+      )).catch(e => console.log(e));
+    ctx.body = users;
   } catch (error) {
     console.log(error);
   }

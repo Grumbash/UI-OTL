@@ -9,9 +9,7 @@
     >
       <template slot="headers" slot-scope="props">
         <tr>
-          <th v-for="header in props.headers" :key="header.text">
-            {{ header.text }}
-          </th>
+          <th v-for="header in props.headers" :key="header.text">{{ header.text }}</th>
         </tr>
       </template>
       <template slot="items" slot-scope="props">
@@ -22,9 +20,7 @@
             v-for="day in props.item.days"
             :key="day + Math.random() * Math.random()"
             class="text-lg-center"
-          >
-            {{ day }}
-          </td>
+          >{{ day }}</td>
           <td class="text-lg-center">{{ props.item.total }}</td>
           <td class="text-lg-center">{{ props.item.updatedAt }}</td>
           <td class="text-lg-center">
@@ -72,7 +68,6 @@ export default {
           return elem;
         });
         this.period = data;
-        console.log(data);
       })
       .catch(e => console.error(e));
   }
