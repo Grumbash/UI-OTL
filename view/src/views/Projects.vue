@@ -14,7 +14,7 @@
             <td class="text-lg-center">{{ props.item.name }}</td>
 
             <td class="text-lg-center">
-              <v-btn route :to="`projects/${props.item.PO}`">Show</v-btn>
+              <v-btn route :to="`/projects/${props.item.PO}`">Show</v-btn>
             </td>
           </tr>
         </template>

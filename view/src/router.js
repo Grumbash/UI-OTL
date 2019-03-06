@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Users from "./views/Users.vue";
+import User from "./views/User.vue";
 import Projects from "./views/Projects.vue";
 import Periods from "./views/Periods.vue";
 import Period from "./views/Period.vue";
@@ -17,6 +18,11 @@ export default new Router({
       path: "/",
       name: "users",
       component: Users
+    },
+    {
+      path: "/users/:id",
+      name: "user",
+      component: User
     },
     {
       path: "/projects",
