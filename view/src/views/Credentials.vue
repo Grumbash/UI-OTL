@@ -35,11 +35,9 @@
           </v-flex>
         </v-layout>
         <v-layout row align-end justify-center>
-          <v-flex xs1>
-            <v-btn @click="submit" color="success">add/update</v-btn>
-          </v-flex>
-          <v-flex xs1>
-            <v-btn @click.stop="dialog = true" dark color="error">remove user</v-btn>
+          <v-flex xs2>
+            <v-btn @click="submit" color="success" class="ml-auto">add/update</v-btn>
+            <v-btn @click.stop="dialog = true" dark color="error">remove</v-btn>
           </v-flex>
         </v-layout>
       </form>
@@ -48,7 +46,7 @@
       <v-card>
         <v-card-title class="headline">Do you want to remove this user?</v-card-title>
 
-        <v-card-text>User history will remain but will no longer be updated. If you want to update the data just fill it in the form.</v-card-text>
+        <v-card-text>User history will remain but will no longer be updated. If you want to update password just fill it in the form.</v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
