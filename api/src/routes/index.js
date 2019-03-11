@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const getAllUsers = require('../controllers/getAllUsers');
+const postFiltredUsers = require('../controllers/postFiltredUsers');
 const getUserById = require('../controllers/getUserById');
 const getAllUnicPeriods = require('../controllers/getAllUnicPeriods');
 const getAllUnicProjects = require('../controllers/getAllUnicProjects');
@@ -13,6 +14,7 @@ const getAllProjectsByPeriodId = require("../controllers/getAllProjectsByPeriodI
 const router = new Router();
 
 router.get('/', getAllUsers);
+router.post('/', postFiltredUsers);
 router.get('/users/:id', getUserById);
 router.get('/periods', getAllUnicPeriods);
 router.get('/periods/:id', getPeriodById);

@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="display-1 grey--text">
-      <router-link :to="`/users/${dUser._id}`">{{ dUser.name }}</router-link>
+      <router-link :to="`/users/${user._id}`">{{ user.name }}</router-link>
     </div>
     <v-data-table
-      v-if="dUser"
-      :items="dUser.periods"
+      v-if="user"
+      :items="user.periods"
       :headers="headers"
       class="elevation-1"
       header-text="user.name"
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import moment from "moment";
 export default {
   data() {
     return {
@@ -48,14 +47,7 @@ export default {
         { text: "Total hours" },
         { text: "Updated at" },
         { text: "Show data" }
-      ],
-      dUser: {
-        ...this.user,
-        periods: this.user.periods.map(period => {
-          const updatedAt = moment(period.updatedAt).format("lll");
-          return { ...period, updatedAt };
-        })
-      }
+      ]
     };
   },
   props: {

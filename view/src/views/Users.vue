@@ -8,7 +8,7 @@
             v-model="filterStatus"
             :items="filterStatuses"
             label="Status"
-            @change="filterHandler"
+            @change="filterRequest"
           ></v-select>
         </v-flex>
       </v-layout>
@@ -20,45 +20,54 @@
 <script>
 import axios from "axios";
 import User from "@/components/User";
+import constants from "@/constants";
+import moment from "moment";
 export default {
   data() {
     return {
       users: Array,
-      filterStatus: "all",
+      filterStatus: 0,
       filterStatuses: [
-        { text: "Show all", value: "all" },
-        { text: "Approved", value: "approved" },
-        { text: "Not approved", value: "other" },
-        { text: "Submitted", value: "Submitted" }
+        { text: "Show all", value: 0 },
+        { text: "Approved", value: 1 },
+        { text: "Not approved", value: 2 }
       ]
     };
   },
   mounted() {
     axios
-      .get("http://localhost:3000/")
+      .get(constants.api)
       .then(res => {
-        this.users = res.data;
+        this.users = res.data.map(user => {
+          return {
+            ...user,
+            periods: user.periods.map(period => {
+              const updatedAt = moment(period.updatedAt).format("lll");
+              return { ...period, updatedAt };
+            })
+          };
+        });
       })
       .catch(e => console.error(e));
   },
   methods: {
-    filterHandler(e) {
-      console.log(this.filterStatus);
-
-      this.users = this.users
-        .map(user => {
-          const periods = user.periods.filter(
-            period =>
-              period.status.toUpperCase() === this.filterStatus.toUpperCase()
-          );
-          if (periods.length > 0) {
-            return { ...user, periods };
-          } else {
-            return null;
-          }
+    filterRequest(e) {
+      axios
+        .post(constants.api, {
+          filterStatus: this.filterStatus
         })
-        .filter(user => user !== null);
-      console.log(this.users);
+        .then(res => {
+          this.users = res.data.map(user => {
+            return {
+              ...user,
+              periods: user.periods.map(period => {
+                const updatedAt = moment(period.updatedAt).format("lll");
+                return { ...period, updatedAt };
+              })
+            };
+          });
+        })
+        .catch(e => console.error(e));
     }
   },
   components: {
