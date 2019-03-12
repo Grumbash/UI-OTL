@@ -35,6 +35,8 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+import constants from "@/constants";
+
 export default {
   data() {
     return {
@@ -57,7 +59,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://localhost:3000/periods/${this.$route.params.id}`)
+      .get(`${constants.api}periods/${this.$route.params.id}`)
       .then(periodRequest => {
         const pattern = "llll";
         const { data } = periodRequest;

@@ -9,6 +9,7 @@
 <script>
 import axios from "axios";
 import User from "@/components/User";
+import constants from "@/constants";
 export default {
   data() {
     return {
@@ -17,7 +18,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://localhost:3000/users/${this.$route.params.id}`)
+      .get(`${constants.api}users/${this.$route.params.id}`)
       .then(res => {
         this.user = res.data;
       })

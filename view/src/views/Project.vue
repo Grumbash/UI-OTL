@@ -22,6 +22,8 @@
 
 <script>
 import axios from "axios";
+import constants from "@/constants";
+
 export default {
   data() {
     return {
@@ -31,7 +33,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://localhost:3000/projects/${this.$route.params.PO}`)
+      .get(`${constants.api}projects/${this.$route.params.PO}`)
       .then(projects => {
         this.projects = projects.data;
       })

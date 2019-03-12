@@ -25,6 +25,7 @@
 
 <script>
 import axios from "axios";
+import constants from "@/constants";
 export default {
   data() {
     return {
@@ -34,7 +35,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:3000/projects")
+      .get(`${constants.api}projects`)
       .then(res => {
         this.projects = res.data;
       })

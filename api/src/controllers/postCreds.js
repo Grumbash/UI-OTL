@@ -22,7 +22,7 @@ module.exports = async ctx => {
     ctx.body = {
       status: "failed",
       message: error
-    };;
+    };
     console.log(error);
   }
 };

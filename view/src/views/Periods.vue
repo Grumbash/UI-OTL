@@ -65,6 +65,7 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+import constants from "@/constants";
 
 export default {
   data() {
@@ -83,7 +84,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:3000/periods")
+      .get(`${constants.api}periods`)
       .then(periods => {
         this.periods = periods.data;
       })

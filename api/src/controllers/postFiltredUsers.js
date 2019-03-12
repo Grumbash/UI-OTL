@@ -33,7 +33,6 @@ module.exports = async ctx => {
         }).filter(user => user !== null);
 
         return ctx.body = users;
-        return ctx.body = users
       default:
         return ctx.body = users
     }

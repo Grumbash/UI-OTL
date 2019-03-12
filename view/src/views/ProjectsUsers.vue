@@ -10,6 +10,7 @@
 <script>
 import axios from "axios";
 import ProjectUsers from "@/components/ProjectUsers";
+import constants from "@/constants";
 
 export default {
   data() {
@@ -19,7 +20,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://localhost:3000/periods/${this.$route.params.id}/projects`)
+      .get(`${constants.api}periods/${this.$route.params.id}/projects`)
       .then(res => {
         this.projects = res.data;
       })
