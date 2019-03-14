@@ -8,6 +8,7 @@ import Period from "./views/Period.vue";
 import Project from "./views/Project.vue";
 import ProjectsUsers from "./views/ProjectsUsers.vue";
 import Credentials from "./views/Credentials.vue";
+import ProjectsNames from "./views/ProjectsNames.vue";
 
 Vue.use(Router);
 
@@ -53,6 +54,11 @@ export default new Router({
       path: "/credentials",
       name: "credentials",
       component: Credentials
+    },
+    {
+      path: "/projects-names",
+      name: "projectsNames",
+      component: ProjectsNames
     }
   ]
 });

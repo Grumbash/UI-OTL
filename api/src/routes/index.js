@@ -1,4 +1,5 @@
 const Router = require('koa-router');
+const passport = require('koa-passport');
 const getAllUsers = require('../controllers/getAllUsers');
 const postFiltredUsers = require('../controllers/postFiltredUsers');
 const getUserById = require('../controllers/getUserById');
@@ -10,6 +11,7 @@ const postCreds = require('../controllers/postCreds');
 const getCreds = require('../controllers/getCreds');
 const deleteCredsById = require('../controllers/deleteCredsById');
 const getAllProjectsByPeriodId = require("../controllers/getAllProjectsByPeriodId")
+const authLogin = require("../controllers/authLogin")
 
 
 const router = new Router();
@@ -25,6 +27,7 @@ router.get('/projects/:PO', getProjectByPO);
 router.get('/creds', getCreds);
 router.post('/creds', postCreds);
 router.delete('/creds/:id', deleteCredsById);
+router.post('/auth/login', authLogin);
 
 
 

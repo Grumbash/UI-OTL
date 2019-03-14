@@ -37,7 +37,12 @@ export default {
         { icon: "supervisor_account", text: "Users", route: "/" },
         { icon: "date_range", text: "Periods", route: "/periods" },
         { icon: "view_list", text: "Projects", route: "/projects" },
-        { icon: "vpn_key", text: "Credentials ", route: "/credentials" }
+        {
+          icon: "find_replace",
+          text: "Projects Names",
+          route: "/projects-names"
+        },
+        { icon: "vpn_key", text: "Credentials", route: "/credentials" }
       ]
     };
   }

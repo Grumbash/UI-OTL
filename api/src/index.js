@@ -6,6 +6,7 @@ const logger = require('koa-logger');
 const routes = require('./routes');
 const bodyParser = require('koa-bodyparser');
 const cors = require('koa2-cors');
+const passport = require('koa-passport');
 
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true })
@@ -13,6 +14,9 @@ mongoose
   .catch(e => console.log(e));
 
 const app = new Koa();
+
+app.use(passport.initialize());
+
 
 app.use(logger());
 app.use(cors());
