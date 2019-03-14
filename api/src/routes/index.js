@@ -16,8 +16,8 @@ const authLogin = require("../controllers/authLogin")
 
 const router = new Router();
 
-router.get('/', getAllUsers);
-router.post('/', postFiltredUsers);
+router.get('/users', getAllUsers);
+router.post('/users', postFiltredUsers);
 router.get('/users/:id', getUserById);
 router.get('/periods', getAllUnicPeriods);
 router.get('/periods/:id', getPeriodById);

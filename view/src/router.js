@@ -6,6 +6,7 @@ import Projects from "./views/Projects.vue";
 import Periods from "./views/Periods.vue";
 import Period from "./views/Period.vue";
 import Project from "./views/Project.vue";
+import Auth from "./views/Auth.vue";
 import ProjectsUsers from "./views/ProjectsUsers.vue";
 import Credentials from "./views/Credentials.vue";
 import ProjectsNames from "./views/ProjectsNames.vue";
@@ -16,9 +17,14 @@ export default new Router({
   mode: "history",
   routes: [
     {
-      path: "/",
+      path: "/users",
       name: "users",
       component: Users
+    },
+    {
+      path: "/auth",
+      name: "auth",
+      component: Auth
     },
     {
       path: "/users/:id",

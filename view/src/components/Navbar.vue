@@ -34,7 +34,7 @@ export default {
     return {
       drawer: false,
       links: [
-        { icon: "supervisor_account", text: "Users", route: "/" },
+        { icon: "supervisor_account", text: "Users", route: "/users" },
         { icon: "date_range", text: "Periods", route: "/periods" },
         { icon: "view_list", text: "Projects", route: "/projects" },
         {

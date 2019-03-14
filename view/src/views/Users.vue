@@ -36,7 +36,7 @@ export default {
   },
   mounted() {
     axios
-      .get(constants.api)
+      .get(`${constants.api}users`)
       .then(res => {
         this.users = res.data.map(user => {
           return {

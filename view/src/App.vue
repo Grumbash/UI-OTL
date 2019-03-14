@@ -18,6 +18,14 @@ export default {
     return {
       //
     };
+  },
+  created: function() {
+    if(!(!!localStorage.jwt)){
+      this.$router.push('/auth');
+    }
+    else{
+      this.$router.push('/users')
+    }
   }
 };
 </script>
