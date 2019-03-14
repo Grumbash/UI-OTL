@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Navbar from "@/components/Navbar";
 export default {
   name: "App",
@@ -24,6 +25,7 @@ export default {
       this.$router.push('/auth');
     }
     else{
+      axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.jwt;
       this.$router.push('/users')
     }
   }

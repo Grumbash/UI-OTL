@@ -1,6 +1,10 @@
 <<template>
     <div class="wrapper">
     <div class="centered-container">
+        <p class="red--text" 
+            v-if="!!error">
+            {{error}}
+        </p>
         <v-flex 
         class="input-box">
             <v-text-field
@@ -35,7 +39,8 @@ export default {
   data() {
     return {
         login: '',
-        password:''
+        password:'',
+        error:''
     };
   },
   methods: {
@@ -47,14 +52,14 @@ export default {
                 password: this.password
             })
             .then(res => {
-                console.log(res);
                 if(res.status === 200){
                     localStorage.removeItem('jwt');
                     localStorage.setItem('jwt',res.data);
                     this.$router.push('users');
+                    this.error = ''
                 }
             })
-            .catch(e => console.error(e));  
+            .catch(e => this.error = e.response.data);  
           }
       }
   },
