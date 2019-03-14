@@ -35,37 +35,37 @@
 import axios from "axios";
 import constants from "@/constants";
 export default {
-  name: 'Authorization',
+  name: "Authorization",
   data() {
     return {
-        login: '',
-        password:'',
-        error:''
+      login: "",
+      password: "",
+      error: ""
     };
   },
   methods: {
-      signIn: function(){
-          if(!!this.login && !!this.password){
-            axios
-            .post(`${constants.api}auth/login`,{
-                login: this.login,
-                password: this.password
-            })
-            .then(res => {
-                if(res.status === 200){
-                    localStorage.removeItem('jwt');
-                    localStorage.setItem('jwt',res.data);
-                    this.$router.push('users');
-                    this.error = ''
-                }
-            })
-            .catch(e => this.error = e.response.data);  
-          }
+    signIn: function() {
+      if (!!this.login && !!this.password) {
+        axios
+          .post(`${constants.api}auth/login`, {
+            login: this.login,
+            password: this.password
+          })
+          .then(res => {
+            if (res.status === 200) {
+              localStorage.removeItem("jwt");
+              localStorage.setItem("jwt", res.data);
+              this.$router.push("users");
+              this.error = "";
+            }
+          })
+          .catch(e => (this.error = e.response.data.msg));
       }
+    }
   },
-  mounted: function(){
-      if(!!localStorage.jwt){
-      this.$router.push('/users');
+  mounted: function() {
+    if (!!localStorage.jwt) {
+      this.$router.push("/users");
     }
   }
 };
@@ -76,17 +76,17 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 }
-.centered-container{
-    width:500px;
-    margin: 0;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
+.centered-container {
+  width: 500px;
+  margin: 0;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
-.input-box{
-    padding: 0;
-    margin: 10px 0;
+.input-box {
+  padding: 0;
+  margin: 10px 0;
 }
 </style>

@@ -8,8 +8,8 @@ const CredModel = require("../models/Creds");
 
 module.exports = async ctx => {
   try {
-    console.log(ctx.request.body.login)
-    const user = await CredModel.findOne({ "sso.login": ctx.request.body.login })
+    console.log(ctx.request.body)
+    const user = await CredModel.findOne({ "sso.login": ctx.request.body.login, "sso.password": ctx.request.body.password })
     console.log(user)
     const jwt = jsonwebtoken.sign(
       {
@@ -23,7 +23,7 @@ module.exports = async ctx => {
     return ctx.body = jwt;
   } catch (error) {
     ctx.status = 404;
-    ctx.body = "Faild login"
+    ctx.body = { msg: "Wrong login or password" }
     console.log(error)
   }
 }

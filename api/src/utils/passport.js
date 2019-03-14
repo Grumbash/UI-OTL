@@ -10,7 +10,7 @@ const jwtOptions = {
   secretOrKey: process.env.JWT_SECRET
 };
 
-passport.use(new JwtStrategy(jwtOptions, (jwt_payload, done) => {
+module.exports = passport => passport.use(new JwtStrategy(jwtOptions, (jwt_payload, done) => {
   Cred.findById(jwt_payload.id)
     .then(user => {
       // Optimise

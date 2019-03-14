@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navbar v-if="this.$route.name !== 'auth'" />
+    <Navbar v-if="this.$route.name !== 'auth'"/>
     <v-content class="mx-4 mb-4">
       <router-view></router-view>
     </v-content>
@@ -21,12 +21,12 @@ export default {
     };
   },
   created: function() {
-    if(!(!!localStorage.jwt)){
-      this.$router.push('/auth');
-    }
-    else{
-      axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.jwt;
-      this.$router.push('/users')
+    if (!!!localStorage.jwt) {
+      this.$router.push("/auth");
+    } else {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + localStorage.jwt;
+      this.$router.push("/users");
     }
   }
 };

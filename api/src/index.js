@@ -16,7 +16,7 @@ mongoose
 const app = new Koa();
 
 app.use(passport.initialize());
-
+require("./utils/passport")(passport);
 
 app.use(logger());
 app.use(cors());
@@ -25,12 +25,12 @@ app.use(bodyParser());
 app.use(async (ctx, next) => {
   try {
     await next();
-  } catch (e) {
+  } catch (err) {
     ctx.status = err.statusCode || err.status || 500;
     ctx.body = {
       message: err.message
     };
-    console.log(e);
+    console.log(err);
   }
 });
 

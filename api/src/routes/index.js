@@ -5,6 +5,7 @@ const postFiltredUsers = require('../controllers/postFiltredUsers');
 const getUserById = require('../controllers/getUserById');
 const getAllUnicPeriods = require('../controllers/getAllUnicPeriods');
 const getAllUnicProjects = require('../controllers/getAllUnicProjects');
+const postToUnicProjects = require('../controllers/postToUnicProjects');
 const getPeriodById = require('../controllers/getPeriodById');
 const getProjectByPO = require('../controllers/getProjectByPO');
 const postCreds = require('../controllers/postCreds');
@@ -16,17 +17,18 @@ const authLogin = require("../controllers/authLogin")
 
 const router = new Router();
 
-router.get('/users', getAllUsers);
-router.post('/users', postFiltredUsers);
-router.get('/users/:id', getUserById);
-router.get('/periods', getAllUnicPeriods);
-router.get('/periods/:id', getPeriodById);
-router.get('/periods/:periodId/projects', getAllProjectsByPeriodId);
-router.get('/projects', getAllUnicProjects);
-router.get('/projects/:PO', getProjectByPO);
-router.get('/creds', getCreds);
-router.post('/creds', postCreds);
-router.delete('/creds/:id', deleteCredsById);
+router.get('/users', passport.authenticate("jwt", { session: false }), getAllUsers);
+router.post('/users', passport.authenticate("jwt", { session: false }), postFiltredUsers);
+router.get('/users/:id', passport.authenticate("jwt", { session: false }), getUserById);
+router.get('/periods', passport.authenticate("jwt", { session: false }), getAllUnicPeriods);
+router.get('/periods/:id', passport.authenticate("jwt", { session: false }), getPeriodById);
+router.get('/periods/:periodId/projects', passport.authenticate("jwt", { session: false }), getAllProjectsByPeriodId);
+router.get('/projects', passport.authenticate("jwt", { session: false }), getAllUnicProjects);
+router.post('/projects', passport.authenticate("jwt", { session: false }), postToUnicProjects);
+router.get('/projects/:PO', passport.authenticate("jwt", { session: false }), getProjectByPO);
+router.get('/creds', passport.authenticate("jwt", { session: false }), getCreds);
+router.post('/creds', passport.authenticate("jwt", { session: false }), postCreds);
+router.delete('/creds/:id', passport.authenticate("jwt", { session: false }), deleteCredsById);
 router.post('/auth/login', authLogin);
 
 

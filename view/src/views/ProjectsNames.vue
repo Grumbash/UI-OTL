@@ -1,5 +1,24 @@
 <template>
-  <div class="projects">
+  <div class="projectsNames">
+    <v-dialog v-model="dialog" width="500">
+      <v-card>
+        <v-card-title class="headline">Change project's name</v-card-title>
+
+        <v-container>
+          <v-flex class="input-box">
+            <v-text-field v-model="projectInfo.uiName" name="ProjectUiName" label="Change name"></v-text-field>
+          </v-flex>
+        </v-container>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="info" flat="flat" @click="dialog = false">Cancel</v-btn>
+
+          <v-btn color="success" flat="flat" @click="sendRequestToChangeUIName">Change</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <h1 class="subheading grey--text">Projects</h1>
     <v-container class="my-5">
       <v-data-table v-if="projects.length" :items="projects" :headers="headers" class="elevation-1">
@@ -14,7 +33,7 @@
             <td class="text-lg-center">{{ props.item.uiName }}</td>
 
             <td class="text-lg-center">
-              <v-btn route :to="`/projects/${props.item.PO}`">Change</v-btn>
+              <v-btn @click.stop="openModal(props.item, $event)" dark color="info">Open</v-btn>
             </td>
           </tr>
         </template>
@@ -29,6 +48,8 @@ import constants from "@/constants";
 export default {
   data() {
     return {
+      projectInfo: {},
+      dialog: false,
       headers: [
         { text: "OTL Project Name" },
         { text: "View Project Name" },
@@ -38,12 +59,30 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get(`${constants.api}projects`)
-      .then(res => {
-        this.projects = res.data;
-      })
-      .catch(e => console.error(e));
+    this.getProjects();
+  },
+  methods: {
+    getProjects() {
+      axios
+        .get(`${constants.api}projects`)
+        .then(res => {
+          this.projects = res.data;
+        })
+        .catch(e => console.error(e));
+    },
+    sendRequestToChangeUIName() {
+      this.dialog = false;
+      axios
+        .post(`${constants.api}projects`, this.projectInfo)
+        .then(res => {
+          this.projects = res.data;
+        })
+        .catch(e => console.error(e));
+    },
+    openModal(projectData, event) {
+      this.dialog = true;
+      this.projectInfo = projectData;
+    }
   }
 };
 </script>

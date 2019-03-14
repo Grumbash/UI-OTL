@@ -53,7 +53,7 @@ export default {
   methods: {
     filterRequest(e) {
       axios
-        .post(constants.api, {
+        .post(`${constants.api}users`, {
           filterStatus: this.filterStatus
         })
         .then(res => {
