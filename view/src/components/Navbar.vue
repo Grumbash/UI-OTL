@@ -5,9 +5,11 @@
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">otl</span>
         <span>View</span>
+
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
+      <v-btn right color="warning" @click="logout">Logout</v-btn>
     </v-toolbar>
 
     <v-navigation-drawer v-model="drawer" app class="primary">
@@ -45,6 +47,14 @@ export default {
         { icon: "vpn_key", text: "Credentials", route: "/credentials" }
       ]
     };
+  },
+  methods: {
+    logout: function(){
+      if(!!localStorage.jwt){
+        localStorage.removeItem('jwt');
+        this.$router.push('auth');
+      }
+    }
   }
 };
 </script>

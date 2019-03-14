@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navbar />
+    <Navbar v-if="this.$route.name !== 'auth'" />
     <v-content class="mx-4 mb-4">
       <router-view></router-view>
     </v-content>

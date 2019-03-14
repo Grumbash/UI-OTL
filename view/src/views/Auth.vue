@@ -1,40 +1,87 @@
 <<template>
-    <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-text-field
-      v-model="name"
-      :rules="nameRules"
-      label="Login"
-      required
-    ></v-text-field>
+    <div class="wrapper">
+    <div class="centered-container">
+        <v-flex 
+        class="input-box">
+            <v-text-field
+                v-model="login"
+                name="login"
+                label="Login"
+            ></v-text-field>
+            </v-flex>
 
-    <v-text-field
-      v-model="password"
-      :rules="passwordRulles"
-      label="Password"
-      required
-    ></v-text-field>
-  </v-form>
+        <v-flex 
+        class="input-box">
+            <v-text-field
+                v-model="password"
+                name="password"
+                label="Password"
+                :type="'password'"
+            ></v-text-field>
+        </v-flex>
+        <v-btn 
+        class="input-box"
+        color="success"
+        @click="signIn">Sign In</v-btn>
+      </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import constants from "@/constants";
 export default {
+  name: 'Authorization',
   data() {
     return {
-        name: '',
+        login: '',
         password:''
     };
   },
-  mounted() {
-  },
-
   methods: {
-
+      signIn: function(){
+          if(!!this.login && !!this.password){
+            axios
+            .post(`${constants.api}auth/login`,{
+                login: this.login,
+                password: this.password
+            })
+            .then(res => {
+                console.log(res);
+                if(res.status === 200){
+                    localStorage.removeItem('jwt');
+                    localStorage.setItem('jwt',res.data);
+                    this.$router.push('users');
+                }
+            })
+            .catch(e => console.error(e));  
+          }
+      }
+  },
+  mounted: function(){
+      if(!!localStorage.jwt){
+      this.$router.push('/users');
+    }
   }
 };
 </script>
+
+<style>
+.wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+.centered-container{
+    width:500px;
+    margin: 0;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.input-box{
+    padding: 0;
+    margin: 10px 0;
+}
+</style>
