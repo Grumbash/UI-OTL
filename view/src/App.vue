@@ -10,6 +10,7 @@
 <script>
 import axios from "axios";
 import Navbar from "@/components/Navbar";
+import constants from "@/constants";
 export default {
   name: "App",
   components: {
@@ -26,7 +27,19 @@ export default {
     } else {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + localStorage.jwt;
-      this.$router.push("/users");
+      axios
+      .get(`${constants.api}`)
+      .then(res => {
+        this.$router.push("/users");
+      })
+      .catch(e => {
+        if(e.response.status === 401){
+          this.$router.push("/auth")
+        }
+        else{
+          console.log(e)
+        }
+        });
     }
   }
 };

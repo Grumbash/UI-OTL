@@ -55,8 +55,10 @@ export default {
             if (res.status === 200) {
               localStorage.removeItem("jwt");
               localStorage.setItem("jwt", res.data);
-              this.$router.push("users");
+              axios.defaults.headers.common["Authorization"] =
+              "Bearer " + localStorage.jwt;
               this.error = "";
+              this.$router.push("users");
             }
           })
           .catch(e => (this.error = e.response.data.msg));
@@ -65,7 +67,12 @@ export default {
   },
   mounted: function() {
     if (!!localStorage.jwt) {
-      this.$router.push("/users");
+      axios
+      .get(`${constants.api}`)
+      .then(res => {
+        this.$router.push("/users");
+      })
+      .catch(e => console.log(e.response.data));
     }
   }
 };
