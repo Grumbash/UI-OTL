@@ -8,7 +8,6 @@ module.exports = async ctx => {
       status: "succeed",
       message: "Credentials have been removed"
     };
-
   } catch (error) {
     ctx.body = {
       status: "failed",

@@ -22,7 +22,7 @@ module.exports = async ctx => {
     );
     return ctx.body = jwt;
   } catch (error) {
-    ctx.status = 404;
+    ctx.status = 403;
     ctx.body = { msg: "Wrong login or password" }
     console.log(error)
   }

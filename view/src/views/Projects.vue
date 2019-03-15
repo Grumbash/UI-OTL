@@ -11,8 +11,8 @@
         <template slot="items" slot-scope="props">
           <tr>
             <td class="text-lg-center">{{ props.item.PO }}</td>
+            <td class="text-lg-center">{{ !!props.item.uiName ? props.item.uiName : '' }}</td>
             <td class="text-lg-center">{{ props.item.name }}</td>
-
             <td class="text-lg-center">
               <v-btn route :to="`/projects/${props.item.PO}`">Show</v-btn>
             </td>
@@ -29,7 +29,12 @@ import constants from "@/constants";
 export default {
   data() {
     return {
-      headers: [{ text: "PO" }, { text: "Project Name" }, { text: "Show" }],
+      headers: [
+        { text: "PO" },
+        { text: "SMG Name" },
+        { text: "OTL Name" },
+        { text: "Show" }
+      ],
       projects: []
     };
   },

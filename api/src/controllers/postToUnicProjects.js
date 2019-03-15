@@ -4,17 +4,25 @@ const UserModel = require('../models/User');
 
 module.exports = async ctx => {
   try {
-    const { PO, name, uiName } = ctx.request.body;
+    const { name, uiName } = ctx.request.body;
     const projects = await ProjectModel.find({ name }).populate({
       path: 'period', populate: { path: "user" }
     });
-    const freshProjects = projects.map(proj => ({ ...proj, uiName }));
-    await ProjectModel.insertMany(freshProjects);
+    const freshProjects = projects.map(proj => {
+      const result = proj.toObject();
+      return {
+        ...result, uiName
+      }
+    });
 
-    const projectsWithNewNames = await ProjectModel.find({ name }).populate({
+    for (const proj of freshProjects) {
+      await ProjectModel.findOneAndUpdate({ name: proj.name }, { uiName: proj.uiName })
+    }
+
+    const allProjects = await ProjectModel.find({}).populate({
       path: 'period', populate: { path: "user" }
     });
-    const noRepeatingProjects = projectsWithNewNames.filter((project, index, self) =>
+    const noRepeatingProjects = allProjects.filter((project, index, self) =>
       index === self.findIndex((t) => (
         t.PO === project.PO
       ))
