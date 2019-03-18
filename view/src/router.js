@@ -10,6 +10,7 @@ import Auth from "./views/Auth.vue";
 import ProjectsUsers from "./views/ProjectsUsers.vue";
 import Credentials from "./views/Credentials.vue";
 import ProjectsNames from "./views/ProjectsNames.vue";
+import UserForm from "./views/UserForm.vue";
 
 Vue.use(Router);
 
@@ -65,6 +66,11 @@ export default new Router({
       path: "/projects-names",
       name: "projectsNames",
       component: ProjectsNames
+    },
+    {
+      path: "/user-form",
+      name: "userForm",
+      component: UserForm
     }
   ]
 });

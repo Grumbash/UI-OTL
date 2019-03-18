@@ -5,7 +5,6 @@
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">otl</span>
         <span>View</span>
-
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -44,15 +43,16 @@ export default {
           text: "Projects Names",
           route: "/projects-names"
         },
-        { icon: "vpn_key", text: "Credentials", route: "/credentials" }
+        { icon: "vpn_key", text: "Credentials", route: "/credentials" },
+        { icon: "contacts", text: "User's form", route: "/user-form" }
       ]
     };
   },
   methods: {
-    logout: function(){
-      if(!!localStorage.jwt){
-        localStorage.removeItem('jwt');
-        this.$router.push('auth');
+    logout: function() {
+      if (!!localStorage.jwt) {
+        localStorage.removeItem("jwt");
+        this.$router.push("auth");
       }
     }
   }

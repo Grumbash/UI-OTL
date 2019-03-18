@@ -13,11 +13,12 @@ const getCreds = require('../controllers/getCreds');
 const deleteCredsById = require('../controllers/deleteCredsById');
 const getAllProjectsByPeriodId = require("../controllers/getAllProjectsByPeriodId")
 const authLogin = require("../controllers/authLogin")
+const postUserForm = require("../controllers/postUserForm")
 
 
 const router = new Router();
 
-router.get('/', passport.authenticate("jwt", { session: false }), async (ctx)=>ctx.status = 200);
+router.get('/', passport.authenticate("jwt", { session: false }), async (ctx) => ctx.status = 200);
 router.get('/users', passport.authenticate("jwt", { session: false }), getAllUsers);
 router.post('/users', passport.authenticate("jwt", { session: false }), postFiltredUsers);
 router.get('/users/:id', passport.authenticate("jwt", { session: false }), getUserById);
@@ -31,6 +32,7 @@ router.get('/creds', passport.authenticate("jwt", { session: false }), getCreds)
 router.post('/creds', passport.authenticate("jwt", { session: false }), postCreds);
 router.delete('/creds/:id', passport.authenticate("jwt", { session: false }), deleteCredsById);
 router.post('/auth/login', authLogin);
+router.post('/user-form', passport.authenticate("jwt", { session: false }), postUserForm);
 
 
 
