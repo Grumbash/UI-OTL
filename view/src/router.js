@@ -14,7 +14,7 @@ import UserForm from "./views/UserForm.vue";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   routes: [
     {
@@ -73,4 +73,14 @@ export default new Router({
       component: UserForm
     }
   ]
+})
+
+// router.beforeEach((to, from, next) => {
+//   console.log(1)
+//   next()
+// })
+router.beforeEach((to, from, next) => {
+
+  console.log(localStorage.jwt);
 });
+export default router

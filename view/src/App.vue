@@ -22,6 +22,7 @@ export default {
     };
   },
   created: function() {
+    debugger;
     var self = this;
     if (!!!localStorage.jwt) {
       this.$router.push("/auth");
@@ -37,7 +38,7 @@ export default {
         })
         .catch(e => {
           if (e.response.status === 401) {
-            this.$router.push("/auth");
+            self.$router.push("/auth");
           } else {
             console.log(e);
           }

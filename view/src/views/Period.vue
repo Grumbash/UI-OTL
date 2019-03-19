@@ -22,6 +22,9 @@
             class="text-lg-center"
           >{{ day }}</td>
           <td class="text-lg-center">{{ props.item.total }}</td>
+          <td class="text-lg-center">
+            <v-text-field v-model="Planned" type="text" label="HH" class="width-min"></v-text-field>
+          </td>
           <td class="text-lg-center">{{ props.item.updatedAt }}</td>
           <td class="text-lg-center">
             <v-btn route :to="`/projects/${props.item.PO}`">Show</v-btn>
@@ -52,9 +55,11 @@ export default {
         { text: "Thursday" },
         { text: "Friday" },
         { text: "Total" },
+        { text: "Planned" },
         { text: "Updated at" },
         { text: "View" }
-      ]
+      ],
+      Planned: ""
     };
   },
   mounted() {
@@ -75,3 +80,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.width-min {
+  width: 15%;
+  margin: 0 auto;
+}
+</style>
