@@ -21,6 +21,7 @@ module.exports = async ctx => {
         id: user.id,
         email: user.emailToSubscribe,
         login: user.sso.login,
+        role: user.role
       },
       secret,
       { expiresIn: "1d" }

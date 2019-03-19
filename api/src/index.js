@@ -12,7 +12,7 @@ mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected'))
   .catch(e => console.log(e));
-mongoose.set({ debugger: true })
+mongoose.set({ debugger: true });
 const app = new Koa();
 
 app.use(passport.initialize());

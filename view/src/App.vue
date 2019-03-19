@@ -22,23 +22,25 @@ export default {
     };
   },
   created: function() {
+    var self = this;
     if (!!!localStorage.jwt) {
       this.$router.push("/auth");
     } else {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + localStorage.jwt;
       axios
-      .get(`${constants.api}`)
-      .then(res => {
-        this.$router.push("/users");
-      })
-      .catch(e => {
-        if(e.response.status === 401){
-          this.$router.push("/auth")
-        }
-        else{
-          console.log(e)
-        }
+        .get(`${constants.api}`)
+        .then(res => {
+          this.$router.push(
+            self.$route.path !== "/" ? self.$route.path : "/users"
+          );
+        })
+        .catch(e => {
+          if (e.response.status === 401) {
+            this.$router.push("/auth");
+          } else {
+            console.log(e);
+          }
         });
     }
   }

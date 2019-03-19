@@ -1,41 +1,82 @@
 <template>
-  <div class="users">
+  <div class="user-form">
     <v-container>
-      <v-form ref="form" v-model="valid">
+      <v-form ref="form">
         <v-layout row align-start justify-center>
           <v-flex xs8>
             <div class="title">SSO Credentials</div>
-            <v-text-field v-model="cred.sso.login" label="Login" required></v-text-field>
-            <v-text-field v-model="cred.sso.password" label="Password" required></v-text-field>
-            <v-text-field v-model="cred.sso.newPassword" label="New password" required></v-text-field>
+            <v-text-field
+              v-model="cred.sso.login"
+              data-vv-name="ssoLogin"
+              v-validate="'required|email'"
+              :error-messages="errors.collect('ssoLogin')"
+              type="email"
+              label="Login"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="cred.sso.password"
+              label="Password"
+              type="password"
+              data-vv-name="ssoPassword"
+              v-validate="'required'"
+              :error-messages="errors.collect('ssoPassword')"
+              required
+            ></v-text-field>
+            <v-text-field v-model="cred.sso.newPassword" label="New password" type="password"></v-text-field>
           </v-flex>
         </v-layout>
 
         <v-layout row align-start justify-center>
           <v-flex xs8>
             <div class="title">VPN Credentials</div>
-            <v-text-field v-model="cred.vpn.login" label="Login" required></v-text-field>
-            <v-text-field v-model="cred.vpn.password" label="Password" required></v-text-field>
-            <v-text-field v-model="cred.vpn.newPassword" label="New password" required></v-text-field>
+            <v-text-field
+              v-model="cred.vpn.login"
+              label="Login"
+              type="text"
+              v-validate="'required|email'"
+              data-vv-name="vpnLogin"
+              :error-messages="errors.collect('vpnLogin')"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="cred.vpn.password"
+              v-validate="'required'"
+              label="Password"
+              type="password"
+              data-vv-name="vpnPassword"
+              :error-messages="errors.collect('vpnPassword')"
+              required
+            ></v-text-field>
+            <v-text-field v-model="cred.vpn.newPassword" label="New password" type="password"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row align-start justify-center>
           <v-flex xs8>
             <div class="title">Email</div>
-            <v-text-field v-model="cred.emailToSubscribe" label="Email to subscribe" required></v-text-field>
+            <v-text-field
+              v-model="cred.emailToSubscribe"
+              label="Email to subscribe"
+              type="email"
+              v-validate="'required|email'"
+              data-vv-name="email"
+              :error-messages="errors.collect('email')"
+              required
+            ></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row align-start justify-center>
           <v-flex xs8>
             <div class="title">Expire date</div>
             <v-text-field
-              v-validate="'date_format:DD/MM/YYYY'"
+              v-validate="'date_format:MM/DD/YY'"
               v-model="cred.expireDate"
-              label="mm/dd/yy"
-              name="ExpireDate"
+              type="text"
+              label="MM/DD/YY"
+              data-vv-name="expireDate"
+              :error-messages="errors.collect('expireDate')"
               required
             ></v-text-field>
-            <span>{{ errors.first('ExpireDdate') }}</span>
           </v-flex>
         </v-layout>
         <v-layout row align-start justify-center>
@@ -53,9 +94,12 @@
 import axios from "axios";
 import constants from "@/constants";
 export default {
+  $_veeValidate: {
+    validator: "new"
+  },
   data() {
     return {
-      valid: true,
+      response: "",
       cred: {
         sso: {
           login: "",
@@ -69,22 +113,32 @@ export default {
         },
         emailToSubscribe: "",
         expireDate: ""
+      },
+      dictionary: {
+        attributes: {
+          ssoLogin: "SSO Login",
+          expireDate: "Expire date"
+        }
       }
     };
   },
+  mounted() {
+    this.$validator.localize("en", this.dictionary);
+  },
   methods: {
-    validate() {
-      if (this.$refs.form.validate()) {
-        this.snackbar = true;
+    async submit(e) {
+      try {
+        const isValid = await this.$validator.validateAll();
+        if (!isValid) return null;
+        const { data } = await axios.post(
+          `${constants.api}user-form`,
+          this.cred
+        );
+        this.response = data;
+        console.log(this.response);
+      } catch (error) {
+        console.error(error);
       }
-    },
-    submit(e) {
-      axios
-        .post(`${constants.api}user-form`, this.cred)
-        .then(res => {
-          this.user = res.data;
-        })
-        .catch(error => console.error(error));
     },
     clear(e) {
       this.cred = {
@@ -98,7 +152,8 @@ export default {
           password: "",
           newPassword: ""
         },
-        emailToSubscribe: ""
+        emailToSubscribe: "",
+        expireDate: ""
       };
     }
   }
