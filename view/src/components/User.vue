@@ -35,6 +35,7 @@
 <script>
 import moment from "moment";
 export default {
+  name: "Users",
   data() {
     return {
       headers: [
@@ -71,8 +72,8 @@ export default {
       }
       return "NULL";
     },
-    goTo(id){
-      this.$router.push(`/periods/${id}`)
+    goTo(id) {
+      this.$router.push(`/periods/${id}`);
     }
   },
   props: {
