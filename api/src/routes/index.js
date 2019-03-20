@@ -14,6 +14,7 @@ const deleteCredsById = require('../controllers/deleteCredsById');
 const getAllProjectsByPeriodId = require("../controllers/getAllProjectsByPeriodId")
 const authLogin = require("../controllers/authLogin")
 const postUserForm = require("../controllers/postUserForm")
+const postPlannedHours = require("../controllers/postPlannedHours")
 
 
 const router = new Router();
@@ -39,6 +40,7 @@ router.post('/creds', passport.authenticate("jwt", { session: false }), postCred
 router.delete('/creds/:id', passport.authenticate("jwt", { session: false }), deleteCredsById);
 router.post('/auth/login', authLogin);
 router.post('/user-form', passport.authenticate("jwt", { session: false }), postUserForm);
+router.post('/planned-hours', passport.authenticate("jwt", { session: false }), postPlannedHours);
 
 
 

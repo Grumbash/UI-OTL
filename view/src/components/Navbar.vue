@@ -30,12 +30,22 @@
   </nav>
 </template>
 <script>
+import decode from "jwt-decode";
 export default {
   name: "NavBar",
   data() {
     return {
+      userName: String,
       drawer: false,
-      links: [
+      links: Array
+    };
+  },
+  mounted() {
+    const user = decode(localStorage.jwt);
+    const { role } = user;
+    this.userName = user.login;
+    if (!!role && role === "admin") {
+      this.links = [
         { icon: "supervisor_account", text: "Users", route: "/users" },
         { icon: "date_range", text: "Periods", route: "/periods" },
         { icon: "view_list", text: "Projects", route: "/projects" },
@@ -46,8 +56,16 @@ export default {
         },
         { icon: "vpn_key", text: "Credentials", route: "/credentials" },
         { icon: "contacts", text: "User's form", route: "/user-form" }
-      ]
-    };
+      ];
+    } else {
+      this.links = [
+        {
+          icon: "find_replace",
+          text: "Projects Names",
+          route: "/projects-names"
+        }
+      ];
+    }
   },
   methods: {
     logout: function() {
