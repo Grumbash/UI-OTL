@@ -8,6 +8,10 @@ const ProjectSchema = new Schema(
     },
     PO: Number,
     name: String,
+    planned: {
+      default: 0,
+      type: Number
+    },
     uiName: {
       default: "",
       type: String
