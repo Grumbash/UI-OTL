@@ -16,7 +16,7 @@
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <tr>
+        <tr @click="goTo(props.item._id)">
           <td class="text-lg-center">{{ props.item.from }} - {{ props.item.to }}</td>
           <td
             class="text-lg-center"
@@ -26,9 +26,6 @@
           >{{ props.item.status }}</td>
           <td class="text-lg-center">{{reduceTotal(props.item.projects)}}</td>
           <td class="text-lg-center">{{props.item.updatedAt}}</td>
-          <td class="text-lg-center">
-            <v-btn route :to="`/periods/${props.item._id}`">Show</v-btn>
-          </td>
         </tr>
       </template>
     </v-data-table>
@@ -44,8 +41,7 @@ export default {
         { text: "Period" },
         { text: "Status" },
         { text: "Total hours" },
-        { text: "Updated at" },
-        { text: "Show data" }
+        { text: "Updated at" }
       ]
     };
   },
@@ -74,6 +70,9 @@ export default {
           .reduce((accum, curr) => accum + curr);
       }
       return "NULL";
+    },
+    goTo(id){
+      this.$router.push(`/periods/${id}`)
     }
   },
   props: {

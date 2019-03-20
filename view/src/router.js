@@ -79,8 +79,8 @@ const router = new Router({
 //   console.log(1)
 //   next()
 // })
-router.beforeEach((to, from, next) => {
+// router.beforeEach((to, from, next) => {
 
-  console.log(localStorage.jwt);
-});
+//   console.log(localStorage.jwt);
+// });
 export default router

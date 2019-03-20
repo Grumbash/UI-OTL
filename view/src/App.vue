@@ -22,7 +22,6 @@ export default {
     };
   },
   created: function() {
-    debugger;
     var self = this;
     if (!!!localStorage.jwt) {
       this.$router.push("/auth");
@@ -32,7 +31,7 @@ export default {
       axios
         .get(`${constants.api}`)
         .then(res => {
-          this.$router.push(
+          self.$router.push(
             self.$route.path !== "/" ? self.$route.path : "/users"
           );
         })

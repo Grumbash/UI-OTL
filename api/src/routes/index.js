@@ -18,7 +18,13 @@ const postUserForm = require("../controllers/postUserForm")
 
 const router = new Router();
 
-router.get('/', passport.authenticate("jwt", { session: false }), async (ctx) => ctx.status = 200);
+router.get('/', passport.authenticate("jwt", { session: false }), async (ctx) => {
+    try {
+        ctx.status = 200;
+    } catch (error) {
+        console.log(error);
+    }
+});
 router.get('/users', passport.authenticate("jwt", { session: false }), getAllUsers);
 router.post('/users', passport.authenticate("jwt", { session: false }), postFiltredUsers);
 router.get('/users/:id', passport.authenticate("jwt", { session: false }), getUserById);
