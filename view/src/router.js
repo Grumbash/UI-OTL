@@ -11,6 +11,16 @@ import ProjectsUsers from "./views/ProjectsUsers.vue";
 import Credentials from "./views/Credentials.vue";
 import ProjectsNames from "./views/ProjectsNames.vue";
 import UserForm from "./views/UserForm.vue";
+import decode from "jwt-decode"
+
+const accessController = (to, from, next) => {
+  const { role } = decode(localStorage.jwt)
+  if (!!role && role === "admin") {
+    next();
+  } else {
+    next("/user-form");
+  }
+}
 
 Vue.use(Router);
 
@@ -20,67 +30,68 @@ const router = new Router({
     {
       path: "/users",
       name: "users",
-      component: Users
-    },
-    {
-      path: "/auth",
-      name: "auth",
-      component: Auth
+      component: Users,
+      beforeEnter: accessController
     },
     {
       path: "/users/:id",
       name: "user",
-      component: User
+      component: User,
+      beforeEnter: accessController
     },
     {
       path: "/projects",
       name: "projects",
-      component: Projects
+      component: Projects,
+      beforeEnter: accessController
     },
     {
       path: "/periods",
       name: "periods",
-      component: Periods
+      component: Periods,
+      beforeEnter: accessController
     },
     {
       path: "/periods/:id",
       name: "period",
-      component: Period
+      component: Period,
+      beforeEnter: accessController
     },
     {
       path: "/projects/:PO",
       name: "project",
-      component: Project
+      component: Project,
+      beforeEnter: accessController
     },
     {
       path: "/periods/:id/projects",
       name: "projectsUsers",
-      component: ProjectsUsers
+      component: ProjectsUsers,
+      beforeEnter: accessController
     },
     {
       path: "/credentials",
       name: "credentials",
-      component: Credentials
+      component: Credentials,
+      beforeEnter: accessController
     },
     {
       path: "/projects-names",
       name: "projectsNames",
-      component: ProjectsNames
+      component: ProjectsNames,
+      beforeEnter: accessController
     },
     {
       path: "/user-form",
       name: "userForm",
       component: UserForm
+    },
+    {
+      path: "/auth",
+      name: "auth",
+      component: Auth
     }
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   console.log(1)
-//   next()
-// })
-// router.beforeEach((to, from, next) => {
-
-//   console.log(localStorage.jwt);
-// });
-export default router
+export default router;

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="subheading">From:{{period.from}}-To:{{period.to}}</h1>
     <v-data-table
       v-if="period.projects"
       :items="period.projects"

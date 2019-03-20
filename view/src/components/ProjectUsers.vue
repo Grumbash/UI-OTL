@@ -23,6 +23,7 @@
 
 <script>
 export default {
+  name: "Projectusers",
   data() {
     return {
       headers: [{ text: "Name" }, { text: "Show user" }]

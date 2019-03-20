@@ -1,5 +1,5 @@
-<template>
-  <nav>
+<template >
+  <nav v-if="this.$route.path !== '/auth'">
     <v-toolbar flat app>
       <v-toolbar-side-icon class="grey--text" @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="text-uppercase grey--text">
@@ -31,6 +31,7 @@
 </template>
 <script>
 export default {
+  name: "NavBar",
   data() {
     return {
       drawer: false,
