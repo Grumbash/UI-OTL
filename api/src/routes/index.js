@@ -16,7 +16,6 @@ const authLogin = require("../controllers/authLogin")
 const postUserForm = require("../controllers/postUserForm")
 const postPlannedHours = require("../controllers/postPlannedHours")
 
-
 const router = new Router();
 
 router.get('/', passport.authenticate("jwt", { session: false }), async (ctx) => {
@@ -35,13 +34,11 @@ router.get('/periods/:periodId/projects', passport.authenticate("jwt", { session
 router.get('/projects', passport.authenticate("jwt", { session: false }), getAllUnicProjects);
 router.post('/projects', passport.authenticate("jwt", { session: false }), postToUnicProjects);
 router.get('/projects/:PO', passport.authenticate("jwt", { session: false }), getProjectByPO);
+router.post('/projects/planned-hours', passport.authenticate("jwt", { session: false }), postPlannedHours);
 router.get('/creds', passport.authenticate("jwt", { session: false }), getCreds);
 router.post('/creds', passport.authenticate("jwt", { session: false }), postCreds);
 router.delete('/creds/:id', passport.authenticate("jwt", { session: false }), deleteCredsById);
 router.post('/auth/login', authLogin);
 router.post('/user-form', passport.authenticate("jwt", { session: false }), postUserForm);
-router.post('/planned-hours', passport.authenticate("jwt", { session: false }), postPlannedHours);
-
-
 
 module.exports = { routes: router.routes(), allowedMethods: router.allowedMethods() };
