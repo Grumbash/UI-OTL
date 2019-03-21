@@ -20,11 +20,11 @@ module.exports = function validateLoginInput(data) {
     errors.emailToSubscribe = "Email feild is required";
   }
 
-  if (Validator.isEmail(data.emailToSubscribe)) {
+  if (!Validator.isEmail(data.emailToSubscribe)) {
     errors.emailToSubscribe = "Email feild is invalid";
   }
 
-  if (Validator.toDate(data.expireDate)) {
+  if (!Validator.toDate(data.expireDate)) {
     errors.expireDate = "Expire date feild is invalid";
   }
 

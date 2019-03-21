@@ -14,7 +14,7 @@ exports.postUserForm = async ctx => {
       ctx.status = 400;
       return ctx.body = errors;
     }
-    console.log(body);
+
     const credsOfUser = await CredModel.findOne({ "sso.login": body.sso.login });
 
     ctx.status = 200;
@@ -35,7 +35,9 @@ exports.postUserForm = async ctx => {
       emailToSubscribe: body.emailToSubscribe,
       expire: body.expireDate,
     };
-    if (fields.sso.password !== credsOfUser.sso.password) {
+    console.log(credsOfUser.sso.password);
+    console.log(body.sso.password);
+    if (body.sso.password !== credsOfUser.sso.password) {
       ctx.status = 400;
       return ctx.body = { msg: "SSO passwords do not match" };
     }

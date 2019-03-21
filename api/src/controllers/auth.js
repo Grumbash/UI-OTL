@@ -12,7 +12,7 @@ exports.authLogin = async ctx => {
     if (!isValid) {
       ctx.status = 400;
       return ctx.body = errors;
-    }
+    }console.log(ctx.request.body)
     const user = await CredModel.findOne({ "sso.login": ctx.request.body.login, "sso.password": ctx.request.body.password })
     console.log(user)
     const jwt = jsonwebtoken.sign(

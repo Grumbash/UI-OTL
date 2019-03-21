@@ -34,7 +34,7 @@
               v-model="cred.vpn.login"
               label="Login"
               type="text"
-              v-validate="'required|email'"
+              v-validate="{required: true, regex: /^\D[\w]{5,}\_[\w]{3}$/}"
               data-vv-name="vpnLogin"
               :error-messages="errors.collect('vpnLogin')"
               required
@@ -69,10 +69,11 @@
           <v-flex xs8>
             <div class="title">Expire date</div>
             <v-text-field
-              v-validate="'date_format:MM/DD/YY'"
+              v-validate="'date_format:MMDDYY'"
               v-model="cred.expireDate"
               type="text"
               label="MM/DD/YY"
+              :mask="mask"
               data-vv-name="expireDate"
               :error-messages="errors.collect('expireDate')"
               required
@@ -100,6 +101,7 @@ export default {
   data() {
     return {
       response: "",
+      mask:"##/##/##",
       cred: {
         sso: {
           login: "",
@@ -116,8 +118,9 @@ export default {
       },
       dictionary: {
         attributes: {
-          // ssoLogin: "SSO Login",
-          expireDate: "Expire date"
+          ssoLogin: "SSO Login",
+          expireDate: "Expire date",
+          vpnLogin: "VPN Login"
         }
       }
     };
@@ -130,6 +133,7 @@ export default {
       try {
         const isValid = await this.$validator.validateAll();
         if (!isValid) return null;
+        this.cred.expireDate = this.cred.expireDate.match(/.{1,2}/g).join('/') 
         const { data } = await axios.post(
           `${constants.api}user-form`,
           this.cred
