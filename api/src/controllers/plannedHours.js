@@ -2,7 +2,8 @@ const PeriodModel = require('../models/Period');
 const ProjectModel = require('../models/Project');
 const UserModel = require('../models/User');
 const plannedHoursValidator = require("../validation/plannedHours");
-module.exports = async ctx => {
+
+exports.postPlannedHours = async ctx => {
   try {
     const forntProj = ctx.request.body
     const { errors, isValid } = plannedHoursValidator(forntProj);

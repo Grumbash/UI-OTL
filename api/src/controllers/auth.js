@@ -5,7 +5,7 @@ const validateLoginInput = require("../validation/login");
 const jsonwebtoken = require("jsonwebtoken");
 const CredModel = require("../models/Creds");
 
-module.exports = async ctx => {
+exports.authLogin = async ctx => {
   try {
     const { errors, isValid } = validateLoginInput(ctx.request.body);
     // Check Validation
