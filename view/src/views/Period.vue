@@ -58,7 +58,7 @@
                       v-model="planned"
                       label="HH.MM"
                       data-vv-name="Planned"
-                      v-validate="'required|max_value:168'"
+                      v-validate="'required|max_value:168|min_value:0'"
                       :error-messages="errors.collect('Planned')"
                       required
                       @input="validate"
