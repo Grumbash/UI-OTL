@@ -11,8 +11,12 @@
         <template slot="items" slot-scope="props">
           <tr>
             <td class="text-lg-center">{{ props.item.PO }}</td>
+            <td
+              class="text-lg-center"
+            >{{ !!props.item.uiNameForRead ? props.item.uiNameForRead : '' }}</td>
             <td class="text-lg-center">{{ !!props.item.uiName ? props.item.uiName : '' }}</td>
             <td class="text-lg-center">{{ props.item.name }}</td>
+            <td class="text-lg-center">{{ !!props.item.PM ? props.item.PM : '' }}</td>
             <td class="text-lg-center">
               <v-btn route :to="`/projects/${props.item.PO}`">Show</v-btn>
             </td>
@@ -31,8 +35,10 @@ export default {
     return {
       headers: [
         { text: "PO" },
+        { text: "Readable name" },
         { text: "SMG Name" },
         { text: "OTL Name" },
+        { text: "PM " },
         { text: "Show" }
       ],
       projects: []

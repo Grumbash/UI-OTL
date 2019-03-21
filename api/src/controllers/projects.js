@@ -60,19 +60,23 @@ exports.getAllUnicProjects = async ctx => {
 
 exports.postToUnicProjects = async ctx => {
   try {
-    const { name, uiName } = ctx.request.body;
+    const { name, uiName, PM, uiNameForRead } = ctx.request.body;
     const projects = await ProjectModel.find({ name }).populate({
       path: 'period', populate: { path: "user" }
     });
     const freshProjects = projects.map(proj => {
       const result = proj.toObject();
       return {
-        ...result, uiName
+        ...result, uiName, PM, uiNameForRead
       }
     });
 
     for (const proj of freshProjects) {
-      await ProjectModel.findOneAndUpdate({ name: proj.name }, { uiName: proj.uiName })
+      await ProjectModel.findOneAndUpdate({ name: proj.name }, {
+        uiName: proj.uiName,
+        PM: proj.PM,
+        uiNameForRead: proj.uiNameForRead
+      })
     }
 
     const allProjects = await ProjectModel.find({}).populate({
