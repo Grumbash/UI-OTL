@@ -3,7 +3,7 @@ const PeriodModel = require('../models/Period');
 const ProjectModel = require('../models/Project');
 const CredModel = require("../models/Creds");
 const validateCredsUpdate = require("../validation/credsUpdate");
-
+const Validator = require("validator");
 exports.postUserForm = async ctx => {
   try {
     const { body } = ctx.request;
@@ -14,10 +14,7 @@ exports.postUserForm = async ctx => {
       ctx.status = 400;
       return ctx.body = errors;
     }
-    console.log(body);
     const credsOfUser = await CredModel.findOne({ "sso.login": body.sso.login });
-
-    ctx.status = 200;
 
     if (!credsOfUser) {
       ctx.status = 400;
@@ -26,16 +23,16 @@ exports.postUserForm = async ctx => {
     const fields = {
       sso: {
         login: body.sso.login,
-        password: body.sso.newPassword,
+        password: Validator.escape(body.sso.newPassword),
       },
       vpn: {
         login: body.vpn.login,
-        password: body.vpn.newPassword,
+        password: Validator.escape(body.vpn.newPassword),
       },
       emailToSubscribe: body.emailToSubscribe,
       expire: body.expireDate,
     };
-    if (fields.sso.password !== credsOfUser.sso.password) {
+    if (body.sso.password !== credsOfUser.sso.password) {
       ctx.status = 400;
       return ctx.body = { msg: "SSO passwords do not match" };
     }
@@ -43,6 +40,7 @@ exports.postUserForm = async ctx => {
       { $set: fields },
       { new: true });
 
+    ctx.status = 200;
     return ctx.body = { msg: "Credentials were successfully updated" };
   } catch (error) {
     console.error(error);
