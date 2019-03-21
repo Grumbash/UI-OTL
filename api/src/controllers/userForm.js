@@ -4,7 +4,7 @@ const ProjectModel = require('../models/Project');
 const CredModel = require("../models/Creds");
 const validateCredsUpdate = require("../validation/credsUpdate");
 
-module.exports = async ctx => {
+exports.postUserForm = async ctx => {
   try {
     const { body } = ctx.request;
 

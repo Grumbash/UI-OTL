@@ -6,11 +6,20 @@ module.exports = function validateLoginInput(data) {
 
   data.planned = !isEmpty(data.planned) ? data.planned : "";
 
-  if (!Validator.isInt(data.planned)) {
-    errors.planned = "Planned hours is not intager";
+  if (+data.planned.trim() > 168) {
+    errors.planned = "Planned hours can not be more than 168";
   }
-  if (!Validator.isLength(data.planned, { min: 1, max: 3 })) {
-    errors.planned = "The scheduled hours must be between 1 and 3 characters";
+
+  if (+data.planned.trim() < 0) {
+    errors.planned = "Planned hours can not be less than 0";
+  }
+
+  if (!Validator.isFloat(data.planned.trim())) {
+    errors.planned = "Planned hours is not a float number";
+  }
+
+  if (!Validator.isLength(data.planned.trim(), { min: 1, max: 5 })) {
+    errors.planned = "The scheduled hours must be between 1 and 5 characters";
   }
 
   if (Validator.isEmpty(data.planned)) {
