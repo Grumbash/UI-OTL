@@ -7,7 +7,6 @@ const CredModel = require("../models/Creds");
 
 module.exports = async ctx => {
   try {
-    console.log(ctx.request.body)
     const { errors, isValid } = validateLoginInput(ctx.request.body);
     // Check Validation
     if (!isValid) {
