@@ -38,6 +38,7 @@
                 <v-btn
                   dark
                   v-on="on"
+                  @click="show(props.item._id)"
                 >
                   Setting
                 </v-btn>
@@ -53,14 +54,25 @@
                 </v-list>
 
                 <v-divider></v-divider>
-
-                <v-text-field v-model="planned" type="text" label="HH"></v-text-field>
-
+                    <v-text-field
+                      v-model="planned"
+                      label="HH.MM"
+                      data-vv-name="Planned"
+                      v-validate="'required|max_value:168'"
+                      :error-messages="errors.collect('Planned')"
+                      required
+                      @input="validate"
+                    ></v-text-field>
                 <v-card-actions>
                   <v-spacer></v-spacer>
 
                   <v-btn flat @click="cancel(props.item._id)">Cancel</v-btn>
-                  <v-btn color="primary" flat @click="save(props.item._id)">Save</v-btn>
+                  <v-btn 
+                  color="primary" 
+                  flat 
+                  @click="save(props.item._id)"
+                  :disabled="disable.save"
+                  >Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-menu>
@@ -79,6 +91,9 @@ import Vue from "vue";
 
 export default {
   name: "Period",
+  $_veeValidate: {
+    validator: "new"
+  },
   data() {
     return {
       period: Object,
@@ -98,7 +113,16 @@ export default {
         { text: "View" }
       ],
       menu: {},
-      planned: ""
+      planned: '',
+      disable: {
+        save: true
+      },
+      dictionary: {
+        attributes: {
+          Planned: "SSO Login",
+          expireDate: "Expire date"
+        }
+      }
     };
   },
   methods: {
@@ -112,19 +136,32 @@ export default {
       .post(`${constants.api}projects/planned-hours`,body)
       .then(response=>{
         project.planned =  response.data.planned;
+        this.cancel(id);
       })
       .catch(error => {
         console.log(error);
-      })
-      this.planned = "";
+      });
+    },
+    show: function(id){
+      this.planned = '';
+      this.$validator.reset()
     },
     cancel: function(id){
       this.menu[id] = false;
-      this.planned = ""
+    },
+    validate: function(){
+      let self = this;
+      this.$validator.validateAll().then((result) => {
+        if(!result){
+          self.disable.save = true;
+        }else{
+          self.disable.save = false;
+        }
+        })
     }
   },
   mounted() {
-    var self = this;
+    let self = this;
     axios
       .get(`${constants.api}periods/${this.$route.params.id}`)
       .then(periodRequest => {

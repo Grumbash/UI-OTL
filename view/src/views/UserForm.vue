@@ -116,7 +116,7 @@ export default {
       },
       dictionary: {
         attributes: {
-          ssoLogin: "SSO Login",
+          // ssoLogin: "SSO Login",
           expireDate: "Expire date"
         }
       }
