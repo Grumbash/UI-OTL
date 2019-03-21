@@ -29,7 +29,7 @@
           <td class="text-lg-center">{{ props.item.updatedAt }}</td>
           <td class="text-lg-center">
              <v-menu
-              v-model="menu"
+              v-model="menu[props.item._id]"
               :close-on-content-click="false"
               :nudge-width="200"
               offset-x
@@ -59,8 +59,8 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
 
-                  <v-btn flat @click="cancel">Cancel</v-btn>
-                  <v-btn color="primary" flat @click="save">Save</v-btn>
+                  <v-btn flat @click="cancel(props.item._id)">Cancel</v-btn>
+                  <v-btn color="primary" flat @click="save(props.item._id)">Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-menu>
@@ -97,21 +97,30 @@ export default {
         { text: "Updated at" },
         { text: "View" }
       ],
-      menu: Object,
+      menu: {},
       planned: ""
     };
   },
   methods: {
-    des: function(){
-      this.meny = false;
-      this.planned = '';
-    },
-    save: function(){
+    save: function(id){
+      let project = this.period.projects.filter(proj => id === proj._id)[0];
+      let body = {
+        id,
+        planned: this.planned
+      }
       axios
-      .post()
+      .post(`${constants.api}projects/planned-hours`,body)
+      .then(response=>{
+        project.planned =  response.data.planned;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      this.planned = "";
     },
-    close: function(){
-      this.des();
+    cancel: function(id){
+      this.menu[id] = false;
+      this.planned = ""
     }
   },
   mounted() {
@@ -128,10 +137,8 @@ export default {
           return elem;
         });
         this.period = data;
-        console.log(data.projects);
         data.projects.forEach(element => {
-          console.log(element);
-          Vue.set(self.menu,element.PO,false)
+          Vue.set(self.menu,element._id,false)
         });
       })
       .catch(e => console.error(e));
