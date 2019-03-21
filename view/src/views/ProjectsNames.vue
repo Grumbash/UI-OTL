@@ -2,11 +2,31 @@
   <div class="projectsNames">
     <v-dialog v-model="dialog" width="500">
       <v-card>
-        <v-card-title class="headline">Change project's name</v-card-title>
+        <v-card-title class="headline">Change project's fields</v-card-title>
 
         <v-container>
           <v-flex class="input-box">
-            <v-text-field v-model="projectInfo.uiName" name="ProjectUiName" label="Change name"></v-text-field>
+            <v-text-field
+              v-model="projectInfo.uiName"
+              name="ProjectSMGName"
+              label="Change SMG name"
+            ></v-text-field>
+          </v-flex>
+        </v-container>
+
+        <v-container>
+          <v-flex class="input-box">
+            <v-text-field
+              v-model="projectInfo.uiNameForRead"
+              name="ProjectReadableName"
+              label="Change readable name"
+            ></v-text-field>
+          </v-flex>
+        </v-container>
+
+        <v-container>
+          <v-flex class="input-box">
+            <v-text-field v-model="projectInfo.PM" name="ProjectPMName" label="Change PM name"></v-text-field>
           </v-flex>
         </v-container>
 
@@ -31,6 +51,8 @@
           <tr>
             <td class="text-lg-center">{{ props.item.name }}</td>
             <td class="text-lg-center">{{ props.item.uiName }}</td>
+            <td class="text-lg-center">{{ props.item.uiNameForRead }}</td>
+            <td class="text-lg-center">{{ props.item.PM }}</td>
 
             <td class="text-lg-center">
               <v-btn @click.stop="openModal(props.item, $event)" dark color="info">Open</v-btn>
@@ -52,8 +74,10 @@ export default {
       dialog: false,
       headers: [
         { text: "OTL Project Name" },
-        { text: "View Project Name" },
-        { text: "Change" }
+        { text: "SMG Project Name" },
+        { text: "Readable Project Name" },
+        { text: "PM" },
+        { text: "Customize" }
       ],
       projects: []
     };
@@ -82,6 +106,7 @@ export default {
     openModal(projectData, event) {
       this.dialog = true;
       this.projectInfo = projectData;
+      console.log(this.projectInfo);
     }
   }
 };
