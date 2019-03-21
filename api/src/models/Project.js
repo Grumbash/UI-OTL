@@ -16,6 +16,14 @@ const ProjectSchema = new Schema(
       default: "",
       type: String
     },
+    PM: {
+      default: "",
+      type: String
+    },
+    uiNameForRead: {
+      default: "",
+      type: String
+    },
     days: [Number],
     total: Number
   },
