@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div class="display-1 grey--text">
-      <router-link :to="`/users/${testFunc._id}`">{{ testFunc.name }}</router-link>
-    </div>
+  <div class="user-component my-4">
+    <router-link :to="`/users/${testFunc._id}`" class="headline user-link">{{ testFunc.name }}</router-link>
     <v-data-table
       v-if="testFunc.hasOwnProperty('updatedAt')"
       :items="testFunc.periods"
@@ -81,3 +79,14 @@ export default {
   }
 };
 </script>
+<style scoped>
+.user-link {
+  color: #2196f3;
+  caret-color: #2196f3;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.user-link:hover {
+  color: #0d47a1;
+}
+</style>
