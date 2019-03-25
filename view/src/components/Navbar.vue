@@ -40,10 +40,12 @@ export default {
       links: Array
     };
   },
-  mounted() {
-    const user = decode(localStorage.jwt);
+  beforeMount() {
+    const user = !!localStorage.jwt ? decode(localStorage.jwt) : { role: "" };
+    debugger;
     const { role } = user;
     this.userName = user.login;
+
     if (!!role && role === "admin") {
       this.links = [
         { icon: "supervisor_account", text: "Users", route: "/users" },
@@ -65,6 +67,7 @@ export default {
           route: "/projects-names"
         }
       ];
+      console.log(this.links);
     }
   },
   methods: {
