@@ -1,35 +1,34 @@
-const { Schema, model } = require("mongoose");
+const {Schema, model} = require ('mongoose');
 
-const ProjectSchema = new Schema(
+const ProjectSchema = new Schema (
   {
     period: {
-      type: "ObjectId",
-      ref: "periods"
+      type: 'ObjectId',
+      ref: 'periods',
     },
     PO: Number,
     name: String,
     planned: {
       default: 0,
-      type: Number
+      type: Number,
     },
     uiName: {
-      default: "",
-      type: String
+      default: '',
+      type: String,
     },
     PM: {
-      default: "",
-      type: String
+      default: '',
+      type: String,
     },
     uiNameForRead: {
-      default: "",
-      type: String
+      default: '',
+      type: String,
     },
     days: [Number],
-    total: Number
+    total: Number,
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
-
-module.exports = Project = model("projects", ProjectSchema, "projects");
+module.exports = Project = model ('projects', ProjectSchema, 'projects');

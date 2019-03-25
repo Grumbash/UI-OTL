@@ -1,6 +1,24 @@
 <template>
   <div class="user-component my-4">
-    <router-link :to="`/users/${testFunc._id}`" class="headline user-link">{{ testFunc.name }}</router-link>
+    <v-dialog v-model="dialog">
+      <v-card>
+        <v-card-title class="headline">Screenshot</v-card-title>
+
+        <v-img :src="`data:image/png;base64, ${tempData}`" alt="Screensot for period"></v-img>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-flex class="show-original-data-user">
+      <router-link :to="`/users/${testFunc._id}`" class="headline user-link">{{ testFunc.name }}</router-link>
+      <v-btn color="info" @click.stop="openModal(user.screenshot, $event)">Show original data</v-btn>
+    </v-flex>
+
     <v-data-table
       v-if="testFunc.hasOwnProperty('updatedAt')"
       :items="testFunc.periods"
@@ -14,7 +32,7 @@
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <tr @click="goTo(props.item._id)">
+        <tr @click="goTo(props.item._id)" class="table-row">
           <td class="text-lg-center">{{ props.item.from }} - {{ props.item.to }}</td>
           <td
             class="text-lg-center"
@@ -23,6 +41,11 @@
             ]"
           >{{ props.item.status }}</td>
           <td class="text-lg-center">{{reduceTotal(props.item.projects)}}</td>
+          <td class="text-lg-center">
+            <v-btn color="info" @click.stop="openModal(props.item.screenshot, $event)">
+              <v-icon>collections</v-icon>
+            </v-btn>
+          </td>
           <td class="text-lg-center">{{props.item.updatedAt}}</td>
         </tr>
       </template>
@@ -40,8 +63,11 @@ export default {
         { text: "Period" },
         { text: "Status" },
         { text: "Total hours" },
+        { text: "Period sceenshot" },
         { text: "Updated at" }
-      ]
+      ],
+      dialog: false,
+      tempData: ""
     };
   },
   computed: {
@@ -72,6 +98,10 @@ export default {
     },
     goTo(id) {
       this.$router.push(`/periods/${id}`);
+    },
+    openModal(tempData, event) {
+      this.tempData = tempData;
+      this.dialog = true;
     }
   },
   props: {
@@ -88,5 +118,13 @@ export default {
 }
 .user-link:hover {
   color: #0d47a1;
+}
+.show-original-data-user {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.table-row {
+  cursor: pointer;
 }
 </style>

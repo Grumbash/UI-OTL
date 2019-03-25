@@ -42,7 +42,6 @@ export default {
   },
   beforeMount() {
     const user = !!localStorage.jwt ? decode(localStorage.jwt) : { role: "" };
-    debugger;
     const { role } = user;
     this.userName = user.login;
 
