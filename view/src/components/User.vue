@@ -16,7 +16,7 @@
 
     <v-flex class="show-original-data-user">
       <router-link :to="`/users/${testFunc._id}`" class="headline user-link">{{ testFunc.name }}</router-link>
-      <v-btn color="info" @click.stop="openModal(user.screenshot, $event)">Show original data</v-btn>
+      <v-btn color="info" @click.stop="openModal(user, $event)">Show original data</v-btn>
     </v-flex>
 
     <v-data-table
@@ -42,7 +42,7 @@
           >{{ props.item.status }}</td>
           <td class="text-lg-center">{{reduceTotal(props.item.projects)}}</td>
           <td class="text-lg-center">
-            <v-btn color="info" @click.stop="openModal(props.item.screenshot, $event)">
+            <v-btn color="info" @click.stop="openModal(props.item, $event)">
               <v-icon>collections</v-icon>
             </v-btn>
           </td>
@@ -55,6 +55,8 @@
 
 <script>
 import moment from "moment";
+import Axios from "axios";
+import constants from "@/constants";
 export default {
   name: "Users",
   data() {
@@ -67,7 +69,7 @@ export default {
         { text: "Updated at" }
       ],
       dialog: false,
-      tempData: ""
+      tempData: constants.imagePlcaeholder
     };
   },
   computed: {
@@ -99,9 +101,17 @@ export default {
     goTo(id) {
       this.$router.push(`/periods/${id}`);
     },
-    openModal(tempData, event) {
-      this.tempData = tempData;
-      this.dialog = true;
+    async openModal(tempData, event) {
+      try {
+        let url = tempData.from
+          ? `periods/${tempData._id}/screenshot`
+          : `users/${tempData._id}/screenshot`;
+        const { data } = await Axios.get(constants.api + url);
+        this.tempData = data;
+        this.dialog = true;
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   props: {
