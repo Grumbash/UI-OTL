@@ -34,7 +34,7 @@
               v-model="cred.vpn.login"
               label="Login"
               type="text"
-              v-validate="{required: true, regex: /^\D[\w]{5,}\_[\w]{3}$/}"
+              v-validate="{required: true, regex: /^\D[\w]{5,}\_[\w]{2}$/}"
               data-vv-name="vpnLogin"
               :error-messages="errors.collect('vpnLogin')"
               required
@@ -101,7 +101,7 @@ export default {
   data() {
     return {
       response: "",
-      mask:"##/##/##",
+      mask: "##/##/##",
       cred: {
         sso: {
           login: "",
@@ -133,7 +133,7 @@ export default {
       try {
         const isValid = await this.$validator.validateAll();
         if (!isValid) return null;
-        this.cred.expireDate = this.cred.expireDate.match(/.{1,2}/g).join('/') 
+        this.cred.expireDate = this.cred.expireDate.match(/.{1,2}/g).join("/");
         const { data } = await axios.post(
           `${constants.api}user-form`,
           this.cred
