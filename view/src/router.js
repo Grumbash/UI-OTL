@@ -11,16 +11,17 @@ import ProjectsUsers from "./views/ProjectsUsers.vue";
 import Credentials from "./views/Credentials.vue";
 import ProjectsNames from "./views/ProjectsNames.vue";
 import UserForm from "./views/UserForm.vue";
-import decode from "jwt-decode"
+import decode from "jwt-decode";
 
 const accessController = (to, from, next) => {
-  const { role } = decode(localStorage.jwt)
+  const { role } = decode(localStorage.jwt);
+  console.log(role);
   if (!!role && role === "admin") {
     next();
   } else {
     next("/user-form");
   }
-}
+};
 
 Vue.use(Router);
 
@@ -92,6 +93,6 @@ const router = new Router({
       component: Auth
     }
   ]
-})
+});
 
 export default router;
