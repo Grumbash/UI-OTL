@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const secret = process.env.JWT_SECRET;
 const validateLoginInput = require("../validation/login");
@@ -11,11 +11,15 @@ exports.authLogin = async ctx => {
     // Check Validation
     if (!isValid) {
       ctx.status = 400;
-      return ctx.body = errors;
+      return (ctx.body = errors);
     }
-	console.log(ctx.request.body);
-    const user = await CredModel.findOne({ "sso.login": ctx.request.body.login, "sso.password": ctx.request.body.password });
-    console.log(user)
+    const login = ctx.request.body.login.toUpperCase();
+    const { password } = ctx.request.body;
+    const user = await CredModel.findOne({
+      "sso.login": login,
+      "sso.password": password
+    });
+    console.log(user);
     const jwt = jsonwebtoken.sign(
       {
         id: user.id,
@@ -26,10 +30,10 @@ exports.authLogin = async ctx => {
       secret,
       { expiresIn: "1d" }
     );
-    return ctx.body = jwt;
+    return (ctx.body = jwt);
   } catch (error) {
     ctx.status = 403;
-    ctx.body = { msg: "Wrong login or password" }
-    console.log(error)
+    ctx.body = { msg: "Wrong login or password" };
+    console.log(error);
   }
-}
+};

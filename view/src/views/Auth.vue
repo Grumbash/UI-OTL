@@ -48,7 +48,7 @@ export default {
       if (!!this.login && !!this.password) {
         axios
           .post(`${constants.api}auth/login`, {
-            login: this.login,
+            login: this.login.toUpperCase(),
             password: this.password
           })
           .then(res => {
@@ -56,7 +56,7 @@ export default {
               localStorage.removeItem("jwt");
               localStorage.setItem("jwt", res.data);
               axios.defaults.headers.common["Authorization"] =
-              "Bearer " + localStorage.jwt;
+                "Bearer " + localStorage.jwt;
               this.error = "";
               this.$router.push("users");
             }
@@ -68,11 +68,11 @@ export default {
   mounted: function() {
     if (!!localStorage.jwt) {
       axios
-      .get(`${constants.api}`)
-      .then(res => {
-        this.$router.push("/users");
-      })
-      .catch(e => console.log(e.response.data));
+        .get(`${constants.api}`)
+        .then(res => {
+          this.$router.push("/users");
+        })
+        .catch(e => console.log(e.response.data));
     }
   }
 };
