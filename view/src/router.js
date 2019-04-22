@@ -15,7 +15,6 @@ import decode from "jwt-decode";
 
 const accessController = (to, from, next) => {
   const { role } = decode(localStorage.jwt);
-  console.log(role);
   if (!!role && role === "admin") {
     next();
   } else {

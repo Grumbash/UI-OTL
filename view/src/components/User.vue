@@ -69,7 +69,7 @@ export default {
         { text: "Updated at" }
       ],
       dialog: false,
-      tempData: constants.imagePlcaeholder
+      tempData: constants.imagePlaceholder
     };
   },
   computed: {
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     reduceTotal(projects) {
-      if (!!projects.length) {
+      if (!!projects && !!projects.length) {
         return projects
           .map(proj => {
             return proj.total;
