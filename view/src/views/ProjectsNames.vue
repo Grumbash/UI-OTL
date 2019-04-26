@@ -39,7 +39,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <h1 class="subheading grey--text">Projects</h1>
     <v-container class="my-5">
       <v-data-table v-if="projects.length" :items="projects" :headers="headers" class="elevation-1">
         <template slot="headers" slot-scope="props">

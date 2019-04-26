@@ -1,9 +1,10 @@
-const UserModel = require('../models/User');
-const PeriodModel = require('../models/Period');
-const ProjectModel = require('../models/Project');
+const UserModel = require("../models/User");
+const PeriodModel = require("../models/Period");
+const ProjectModel = require("../models/Project");
 const CredModel = require("../models/Creds");
 const validateCredsUpdate = require("../validation/credsUpdate");
 const Validator = require("validator");
+
 exports.postUserForm = async ctx => {
   try {
     const { body } = ctx.request;
@@ -12,36 +13,40 @@ exports.postUserForm = async ctx => {
     // Check Validation
     if (!isValid) {
       ctx.status = 400;
-      return ctx.body = errors;
+      return (ctx.body = errors);
     }
-    const credsOfUser = await CredModel.findOne({ "sso.login": body.sso.login });
+    const credsOfUser = await CredModel.findOne({
+      "sso.login": body.sso.login
+    });
 
     if (!credsOfUser) {
       ctx.status = 400;
-      return ctx.body = { msg: "No user with such sso login wasn't found" }
+      return (ctx.body = { msg: "No user with such sso login wasn't found" });
     }
     const fields = {
       sso: {
         login: body.sso.login,
-        password: Validator.escape(body.sso.newPassword),
+        password: Validator.escape(body.sso.newPassword)
       },
       vpn: {
         login: body.vpn.login,
-        password: Validator.escape(body.vpn.newPassword),
+        password: Validator.escape(body.vpn.newPassword)
       },
       emailToSubscribe: body.emailToSubscribe,
-      expire: body.expireDate,
+      expire: body.expireDate
     };
     if (body.sso.password !== credsOfUser.sso.password) {
       ctx.status = 400;
-      return ctx.body = { msg: "SSO passwords do not match" };
+      return (ctx.body = { msg: "SSO passwords do not match" });
     }
-    await CredModel.findOneAndUpdate({ _id: credsOfUser.id },
+    await CredModel.findOneAndUpdate(
+      { _id: credsOfUser.id },
       { $set: fields },
-      { new: true });
+      { new: true }
+    );
 
     ctx.status = 200;
-    return ctx.body = { msg: "Credentials were successfully updated" };
+    return (ctx.body = { msg: "Credentials were successfully updated" });
   } catch (error) {
     console.error(error);
   }

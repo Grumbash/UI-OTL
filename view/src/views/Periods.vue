@@ -1,6 +1,5 @@
 <template>
   <div class="periods">
-    <h1 class="heading grey--text mb-3">Periods</h1>
     <v-container grid-list-md>
       <v-layout row align-end justify-center>
         <v-flex xs2>

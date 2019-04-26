@@ -1,6 +1,5 @@
 <template>
   <div class="users">
-    <h1 class="subheading grey--text">Users</h1>
     <v-container class="my-5">
       <v-layout row align-end justify-center>
         <v-flex xs2>

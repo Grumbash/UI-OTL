@@ -61,7 +61,10 @@ export default {
               this.$router.push("users");
             }
           })
-          .catch(e => (this.error = e.response.data.msg));
+          .catch(e => {
+            console.error(e);
+            this.error = e.response.data.msg;
+          });
       }
     }
   },

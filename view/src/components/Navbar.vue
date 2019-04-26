@@ -66,7 +66,6 @@ export default {
           route: "/projects-names"
         }
       ];
-      console.log(this.links);
     }
   },
   methods: {

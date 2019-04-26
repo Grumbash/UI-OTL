@@ -5,26 +5,32 @@ module.exports = function validateLoginInput(data) {
   let errors = {};
 
   data.sso.login = !isEmpty(data.sso.login) ? data.sso.login : "";
-  data.emailToSubscribe = !isEmpty(data.emailToSubscribe) ? data.emailToSubscribe : "";
+  data.emailToSubscribe = !isEmpty(data.emailToSubscribe)
+    ? data.emailToSubscribe
+    : "";
   data.expireDate = !isEmpty(data.expireDate) ? data.expireDate : "";
 
   // SSO
 
   if (!Validator.isEmail(data.sso.login)) {
+    errors.sso = {};
     errors.sso.login = "SSO login is invalid";
   }
 
   if (Validator.isEmpty(data.sso.login)) {
+    errors.sso = {};
     errors.sso.login = "SSO login feild is required";
   }
 
-  // VPN 
+  // VPN
 
-  if (!Validator.matches(data.vpn.login, /^\D[\w]{5,}\_[\w]{3}$/)) {
+  if (!Validator.matches(data.vpn.login, /^\D[\w]{5,}\_[\w]{2}$/)) {
+    errors.vpn = {};
     errors.vpn.login = "VPN login is invalid";
   }
 
   if (Validator.isEmpty(data.vpn.login)) {
+    errors.vpn = {};
     errors.vpn.login = "VPN login feild is required";
   }
 
@@ -44,7 +50,7 @@ module.exports = function validateLoginInput(data) {
     errors.expireDate = "Expire date feild is invalid";
   }
 
-  if (!Validator.isEmpty(data.expireDate)) {
+  if (Validator.isEmpty(data.expireDate)) {
     errors.expireDate = "Expire feild is required";
   }
 
