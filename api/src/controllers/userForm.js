@@ -39,6 +39,13 @@ exports.postUserForm = async ctx => {
       ctx.status = 400;
       return (ctx.body = { msg: "SSO passwords do not match" });
     }
+    if (
+      !!credsOfUser.vpn.password &&
+      body.vpn.password !== credsOfUser.vpn.password
+    ) {
+      ctx.status = 400;
+      return (ctx.body = { msg: "VPN passwords do not match" });
+    }
     await CredModel.findOneAndUpdate(
       { _id: credsOfUser.id },
       { $set: fields },

@@ -31,6 +31,7 @@
 </template>
 <script>
 import decode from "jwt-decode";
+import { logout } from "../shared/logout";
 export default {
   name: "NavBar",
   data() {
@@ -70,10 +71,7 @@ export default {
   },
   methods: {
     logout: function() {
-      if (!!localStorage.jwt) {
-        localStorage.removeItem("jwt");
-        this.$router.push("auth");
-      }
+      return logout(localStorage, this.$router);
     }
   }
 };

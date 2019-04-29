@@ -19,7 +19,10 @@ exports.authLogin = async ctx => {
       "sso.login": login,
       "sso.password": password
     });
-    console.log(user);
+    if (!user) {
+      ctx.status = 403;
+      return (ctx.body = { msg: "Wrong login or password" });
+    }
     const jwt = jsonwebtoken.sign(
       {
         id: user.id,

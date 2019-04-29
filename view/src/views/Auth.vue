@@ -1,33 +1,16 @@
-<<template>
-    <div class="wrapper">
-    <div class="centered-container">
-        <p class="red--text" 
-            v-if="!!error">
-            {{error}}
-        </p>
-        <v-flex 
-        class="input-box">
-            <v-text-field
-                v-model="login"
-                name="login"
-                label="Login"
-            ></v-text-field>
-            </v-flex>
+<template>
+  <div class="wrapper">
+    <form class="centered-container" @submit.stop.prevent="signIn">
+      <p class="red--text" v-if="!!error">{{error}}</p>
+      <v-flex class="input-box">
+        <v-text-field v-model="login" name="login" label="Login"></v-text-field>
+      </v-flex>
 
-        <v-flex 
-        class="input-box">
-            <v-text-field
-                v-model="password"
-                name="password"
-                label="Password"
-                :type="'password'"
-            ></v-text-field>
-        </v-flex>
-        <v-btn 
-        class="input-box"
-        color="success"
-        @click="signIn">Sign In</v-btn>
-      </div>
+      <v-flex class="input-box">
+        <v-text-field v-model="password" name="password" label="Password" :type="'password'"></v-text-field>
+      </v-flex>
+      <v-btn class="input-box" type="submit" color="success">Sign In</v-btn>
+    </form>
   </div>
 </template>
 

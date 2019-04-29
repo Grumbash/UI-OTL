@@ -94,6 +94,7 @@
 <script>
 import axios from "axios";
 import constants from "@/constants";
+import { logout } from "../shared/logout";
 export default {
   $_veeValidate: {
     validator: "new"
@@ -138,8 +139,9 @@ export default {
           `${constants.api}user-form`,
           this.cred
         );
-        this.response = data;
+        this.response = data.msg ? data.msg : null;
         console.log(this.response);
+        logout(localStorage, this.$router);
       } catch (error) {
         console.error(error);
       }
