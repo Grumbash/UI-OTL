@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="project" class="headline grey--text">PO: {{project.PO}}</div>
-    <div v-if="project" class="title grey--text">Project name: {{project.name}}</div>
+    <div
+      v-if="project"
+      class="title grey--text"
+    >Project name: {{project.uiNameForRead || project.uiName || project.name}}</div>
     <v-data-table v-if="project" :items="project.users" :headers="headers" class="elevation-1">
       <template slot="headers" slot-scope="props">
         <tr>

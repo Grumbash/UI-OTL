@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="projects.length" class="headline grey--text">PO: {{projects[0].PO}}</div>
-    <div v-if="projects.length" class="title grey--text">Project name: {{projects[0].name}}</div>
+    <div
+      v-if="projects.length"
+      class="title grey--text"
+    >Project name: {{projects[0].readableName || projects[0].uiName || projects[0].name}}</div>
     <v-data-table v-if="projects.length" :items="projects" :headers="headers" class="elevation-1">
       <template slot="headers" slot-scope="props">
         <tr>
@@ -12,7 +15,10 @@
         <tr>
           <td class="text-lg-center">{{ props.item.period.user.name }}</td>
           <td class="text-lg-center">
-            <v-btn route :to="`/users/${props.item.period.user._id}`">Show</v-btn>
+            <v-btn
+              route
+              :to="`/projects/${projects[0].PO}/users/${props.item.period.user._id}`"
+            >Show</v-btn>
           </td>
         </tr>
       </template>

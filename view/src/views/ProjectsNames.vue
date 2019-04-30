@@ -105,7 +105,6 @@ export default {
     openModal(projectData, event) {
       this.dialog = true;
       this.projectInfo = projectData;
-      console.log(this.projectInfo);
     }
   }
 };

@@ -11,6 +11,7 @@ import ProjectsUsers from "./views/ProjectsUsers.vue";
 import Credentials from "./views/Credentials.vue";
 import ProjectsNames from "./views/ProjectsNames.vue";
 import UserForm from "./views/UserForm.vue";
+import ProjectUsers from "./views/ProjectUser.vue";
 import decode from "jwt-decode";
 
 const accessController = (to, from, next) => {
@@ -61,6 +62,12 @@ const router = new Router({
       path: "/projects/:PO",
       name: "project",
       component: Project,
+      beforeEnter: accessController
+    },
+    {
+      path: "/projects/:PO/users/:id",
+      component: ProjectUsers,
+      name: "projectUsers",
       beforeEnter: accessController
     },
     {
