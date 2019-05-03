@@ -1,13 +1,13 @@
 <template >
   <nav v-if="this.$route.path !== '/auth'">
     <v-toolbar flat app>
-      <v-toolbar-side-icon class="grey--text" @click="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon v-if="userRole === 'admin'" class="grey--text" @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">otl</span>
         <span>View</span>
       </v-toolbar-title>
-
       <v-spacer></v-spacer>
+      <v-btn right color="info" v-if="userRole === 'admin'" @click="startParser">Start the parser</v-btn>
       <v-btn right color="warning" @click="logout">Logout</v-btn>
     </v-toolbar>
 
@@ -32,12 +32,15 @@
 <script>
 import decode from "jwt-decode";
 import { logout } from "../shared/logout";
+import axios from "axios";
+import constants from "../constants.js";
 export default {
   name: "NavBar",
   data() {
     return {
       userName: String,
       drawer: false,
+      userRole: String,
       links: Array
     };
   },
@@ -45,6 +48,7 @@ export default {
     const user = !!localStorage.jwt ? decode(localStorage.jwt) : { role: "" };
     const { role } = user;
     this.userName = user.login;
+    this.userRole = role;
 
     if (!!role && role === "admin") {
       this.links = [
@@ -61,17 +65,20 @@ export default {
       ];
     } else {
       this.links = [
-        {
-          icon: "find_replace",
-          text: "Projects Names",
-          route: "/projects-names"
-        }
+        { icon: "contacts", text: "User's form", route: "/user-form" }
       ];
     }
   },
   methods: {
     logout: function() {
       return logout(localStorage, this.$router);
+    },
+    startParser() {
+      axios
+        .post(`${constants.api}scripts/start-parser`)
+        .then(res => console.log(res))
+        .catch(e => console.error(e));
+      console.log("start");
     }
   }
 };

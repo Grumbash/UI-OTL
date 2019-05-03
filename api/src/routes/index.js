@@ -28,6 +28,7 @@ const {
 const { authLogin } = require("../controllers/auth");
 const { postUserForm } = require("../controllers/userForm");
 const { postPlannedHours } = require("../controllers/plannedHours");
+const { startParser } = require("../controllers/scripts");
 
 const router = new Router();
 
@@ -124,6 +125,12 @@ router.post(
   "/user-form",
   passport.authenticate("jwt", { session: false }),
   postUserForm
+);
+
+router.post(
+  "/scripts/start-parser",
+  passport.authenticate("jwt", { session: false }),
+  startParser
 );
 
 module.exports = {
